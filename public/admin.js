@@ -63,9 +63,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Revoke Key (For now, we just reload since revoke isn't in backend yet, but we'll leave placeholder)
-  window.revokeKey = function(id) {
-    alert('Revoke feature coming soon to backend integration!');
+  // Revoke Key
+  window.revokeKey = async function(id) {
+    if (!confirm('Are you sure you want to revoke this key?')) return;
+    try {
+      const res = await fetch('/api/revoke', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminToken: passInput.value, id: id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        renderKeys();
+      } else {
+        alert(data.error || 'Failed to revoke key');
+      }
+    } catch (err) {
+      alert('Error connecting to server');
+    }
   };
 
   // Render Table

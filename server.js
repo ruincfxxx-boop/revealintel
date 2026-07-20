@@ -192,6 +192,20 @@ app.post('/api/generate', async (req, res) => {
   res.json({ success: true, key: newKey });
 });
 
+// Revoke Key
+app.post('/api/revoke', async (req, res) => {
+  const { adminToken, id } = req.body;
+  if (adminToken !== 'u9xMpsytG7XdNdVk8GHr') return res.status(403).json({error: 'Forbidden'});
+  if (!id) return res.status(400).json({error: 'Missing ID'});
+  try {
+    await pool.query('DELETE FROM api_keys WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Revoke Error:', err);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
+
 // 3. CHECKOUT - Handle Crypto & Card
 app.post('/api/checkout', async (req, res) => {
   const { email, plan, method, discordId } = req.body;
