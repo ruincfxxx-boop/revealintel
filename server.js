@@ -43,57 +43,14 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 const { Pool } = require('pg');
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:Q%3A7%40k8K0yI6D@db.vtnazfgxygnpphgeebql.supabase.co:5432/postgres'
+  host: 'aws-1-us-west-2.pooler.supabase.com',
+  port: 6543,
+  database: 'postgres',
+  user: 'postgres.vtnazfgxygnpphgeebql',
+  password: 'uA1ft0J_M0(`',
+  ssl: { rejectUnauthorized: false }
 });
-
-async function initDB() {
-  const client = await pool.connect();
-  try {
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS api_keys (
-        id BIGINT PRIMARY KEY,
-        key_str VARCHAR(255) UNIQUE NOT NULL,
-        plan VARCHAR(50),
-        email VARCHAR(255),
-        durationDays INT,
-        expires BIGINT,
-        requests INT DEFAULT 0,
-        ip VARCHAR(255)
-      )
-    `);
-    
-    // Migration from database.json
-    const dbPath = path.join(__dirname, 'database.json');
-    if (fs.existsSync(dbPath)) {
-      const data = fs.readFileSync(dbPath, 'utf8');
-      const db = JSON.parse(data || '{"keys":[]}');
-      if (db.keys && db.keys.length > 0) {
-        let migratedCount = 0;
-        for (const k of db.keys) {
-          const res = await client.query('SELECT 1 FROM api_keys WHERE key_str = $1', [k.key]);
-          if (res.rowCount === 0) {
-            await client.query(
-              'INSERT INTO api_keys (id, key_str, plan, email, durationDays, expires, requests, ip) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-              [k.id || Date.now(), k.key, k.plan, k.email, k.durationDays, k.expires || null, k.requests || 0, k.ip || null]
-            );
-            migratedCount++;
-          }
-        }
-        if (migratedCount > 0) {
-          console.log(`[MIGRATION SUCCESS] Migrated ${migratedCount} keys to Supabase.`);
-        }
-      }
-    }
-  } catch (err) {
-    console.error('[DB INIT ERROR]', err);
-  } finally {
-    client.release();
-  }
-}
-
-initDB();
 
 // --- Logging Infrastructure ---
 const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1528703985832427562/KQdFvnmZdt32ul3MEJXLr2iaBmjPZnu0F7M-1-wka08FIv5eqZqDEAHweroZhq2f148T';
@@ -180,9 +137,22 @@ function generateKeyString(email, plan) {
 app.get('/api/admin/keys', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM api_keys');
-    res.json({ keys: result.rows });
-  } catch (err) {
-    res.status(500).json({ error: 'Database error' });
+    const keys = result.rows.map(row => ({
+      id: row.id,
+      key: row.key,
+      plan: row.plan,
+      email: row.email,
+      durationDays: row.duration_days,
+      expires: row.expires ? parseInt(row.expires) : null,
+      hwid: row.hwid,
+      status: row.status,
+      logs: row.logs,
+      ip: row.ip,
+      requests: row.requests
+    }));
+    res.json({ keys });
+  } catch(e) {
+    res.status(500).json({ error: 'DB Error' });
   }
 });
 
@@ -200,14 +170,10 @@ app.post('/api/generate', async (req, res) => {
     expires: parseInt(durationDays) === 9999 ? null : Date.now() + (parseInt(durationDays) * 24 * 60 * 60 * 1000)
   };
   
-  try {
-    await pool.query(
-      'INSERT INTO api_keys (id, key_str, plan, email, durationDays, expires, requests, ip) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-      [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires, 0, null]
-    );
-  } catch (err) {
-    return res.status(500).json({ error: 'Failed to insert key' });
-  }
+  await pool.query(
+    'INSERT INTO api_keys (id, key, plan, email, duration_days, expires) VALUES ($1, $2, $3, $4, $5, $6)',
+    [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires]
+  );
 
   if (email && email !== 'Admin Generated' && GMAIL_USER !== 'your_email@gmail.com') {
     try {
@@ -308,14 +274,10 @@ app.post('/api/webhook/nowpayments', async (req, res) => {
       expires
     };
 
-    try {
-      await pool.query(
-        'INSERT INTO api_keys (id, key_str, plan, email, durationDays, expires, requests, ip) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-        [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires, 0, null]
-      );
-    } catch (err) {
-      console.error('Failed to insert key after payment:', err);
-    }
+    await pool.query(
+      'INSERT INTO api_keys (id, key, plan, email, duration_days, expires) VALUES ($1, $2, $3, $4, $5, $6)',
+      [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires]
+    );
 
     logToFile('PURCHASE_REAL', `Plan: ${plan} | Email: ${customer_email} | Discord: ${discordId} | Key: ${newKey.key}`);
     logToDiscord('New Purchase Completed 🚀', `A crypto payment was confirmed via NOWPayments.`, 0xf59e0b, [
@@ -368,10 +330,12 @@ app.post('/api/register', async (req, res) => {
   const userEmail = email ? email : `${username}@local`;
 
   // Check if username already exists
-  const existsRes = await pool.query('SELECT 1 FROM api_keys WHERE email = $1', [userEmail]);
-  if (existsRes.rowCount > 0) {
+  const resCheck = await pool.query('SELECT id FROM api_keys WHERE email = $1', [userEmail]);
+  if (resCheck.rows.length > 0) {
     return res.status(409).json({ error: 'Username or Email already taken.' });
   }
+  
+  const currentIp = req.ip || req.headers['x-forwarded-for'] || 'unknown';
   
   const newKey = {
     id: Date.now(),
@@ -380,19 +344,14 @@ app.post('/api/register', async (req, res) => {
     email: userEmail,
     durationDays: 365,
     expires: Date.now() + (365 * 24 * 60 * 60 * 1000),
-    requests: 0
+    requests: 0,
+    ip: currentIp
   };
   
-  const currentIp = req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  
-  try {
-    await pool.query(
-      'INSERT INTO api_keys (id, key_str, plan, email, durationDays, expires, requests, ip) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-      [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires, 0, currentIp]
-    );
-  } catch (err) {
-    return res.status(500).json({ error: 'Failed to create account.' });
-  }
+  await pool.query(
+    'INSERT INTO api_keys (id, key, plan, email, duration_days, expires, requests, ip) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+    [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires, newKey.requests, newKey.ip]
+  );
   
   const dIdSafe = discordId || 'None';
   logToFile('SIGNUP_SUCCESS', `User: ${username} | Email: ${email} | Discord: ${dIdSafe} | Invite: ${invite || 'None'} | IP: ${currentIp}`, true);
@@ -437,10 +396,9 @@ app.post('/api/login', async (req, res) => {
   }
   captchaStore.delete(captchaId);
   
-  const validKeyRes = await pool.query('SELECT * FROM api_keys WHERE key_str = $1', [key]);
-  if (validKeyRes.rowCount === 0) return res.status(403).json({ error: 'Invalid API Key.' });
-  
-  const validKey = validKeyRes.rows[0];
+  const resKey = await pool.query('SELECT * FROM api_keys WHERE key = $1', [key]);
+  if (resKey.rows.length === 0) return res.status(403).json({ error: 'Invalid API Key.' });
+  const validKey = resKey.rows[0];
   if (validKey.expires && validKey.expires < Date.now()) return res.status(403).json({ error: 'API Key expired.' });
   
   const currentIp = req.ip || req.headers['x-forwarded-for'] || 'unknown';
@@ -451,7 +409,7 @@ app.post('/api/login', async (req, res) => {
 
   if (!isOwner) {
     if (!validKey.ip) {
-      await pool.query('UPDATE api_keys SET ip = $1 WHERE key_str = $2', [currentIp, key]);
+      await pool.query('UPDATE api_keys SET ip = $1 WHERE id = $2', [currentIp, validKey.id]);
     } else if (validKey.ip !== currentIp) {
       locationStatus = 'new';
     }
@@ -491,12 +449,22 @@ app.get('/api/search', async (req, res) => {
   }
 
   // Validate Key
-  const validKeyRes = await pool.query('SELECT * FROM api_keys WHERE key_str = $1', [userKey]);
-  if (validKeyRes.rowCount === 0) return res.status(403).json({ error: 'Invalid API Key.' });
+  const resKey = await pool.query('SELECT * FROM api_keys WHERE key = $1', [userKey]);
+  if (resKey.rows.length === 0) {
+    return res.status(403).json({ error: 'Invalid API Key.' });
+  }
+  const validKey = resKey.rows[0];
 
-  const validKey = validKeyRes.rows[0];
-  if (validKey.expires && validKey.expires < Date.now()) return res.status(403).json({ error: 'API Key has expired.' });
-  if (validKey.plan === 'Free') return res.status(403).json({ error: 'Access Denied: Please upgrade your plan to access the search database.' });
+  if (validKey.expires && validKey.expires < Date.now()) {
+    return res.status(403).json({ error: 'API Key has expired.' });
+  }
+
+  if (validKey.plan === 'Free') {
+    return res.status(403).json({ error: 'Access Denied: Please upgrade your plan to access the search database.' });
+  }
+  
+  // Track request
+  await pool.query('UPDATE api_keys SET requests = COALESCE(requests, 0) + 1 WHERE id = $1', [validKey.id]);
 
   const currentIp = req.ip || req.headers['x-forwarded-for'] || 'unknown';
   logToFile('SEARCH', `User: ${validKey.email.split('@')[0]} | Query: ${query} | IP: ${currentIp}`);
@@ -577,16 +545,16 @@ app.get('/api/search', async (req, res) => {
 
 // 5. Clean Expired Keys Periodically
 setInterval(async () => {
-  try {
-    const res = await pool.query('DELETE FROM api_keys WHERE expires IS NOT NULL AND expires < $1', [Date.now()]);
-    if (res.rowCount > 0) {
-      console.log(`[CLEANUP] Removed ${res.rowCount} expired keys.`);
-    }
-  } catch (err) {
-    console.error('[CLEANUP ERROR]', err);
+  const now = Date.now();
+  const resDel = await pool.query('DELETE FROM api_keys WHERE expires IS NOT NULL AND expires < $1', [now]);
+  if (resDel.rowCount > 0) {
+    console.log(`[CLEANUP] Removed ${resDel.rowCount} expired keys.`);
   }
 }, 60 * 60 * 1000);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+module.exports = app;

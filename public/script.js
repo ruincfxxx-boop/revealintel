@@ -465,6 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function updateCartBadge() {
+    if (!cartBadge) return;
     const count = cart.reduce((sum, item) => sum + item.qty, 0);
     cartBadge.textContent = count;
     if (count > 0) {
@@ -778,9 +779,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       draw() {
+        const isLight = document.body.classList.contains('light-mode');
+        const colorBase = isLight ? '0, 0, 0' : '255, 255, 255';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillStyle = `rgba(${colorBase}, 0.8)`;
         ctx.fill();
       }
     }
@@ -791,6 +794,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animateBg() {
       ctx.clearRect(0, 0, width, height);
+      const isLight = document.body.classList.contains('light-mode');
+      const colorBase = isLight ? '0, 0, 0' : '255, 255, 255';
+
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
@@ -802,7 +808,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let distMouse = Math.sqrt(dxm * dxm + dym * dym);
           if (distMouse < 150) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.4 - distMouse / 150 * 0.4})`;
+            ctx.strokeStyle = `rgba(${colorBase}, ${0.4 - distMouse / 150 * 0.4})`;
             ctx.lineWidth = 1;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(mouse.x, mouse.y);
@@ -816,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 - distance / 120 * 0.3})`;
+            ctx.strokeStyle = `rgba(${colorBase}, ${0.3 - distance / 120 * 0.3})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

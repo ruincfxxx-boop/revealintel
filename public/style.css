@@ -64,7 +64,7 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -2;
+  z-index: 0;
   pointer-events: none;
   opacity: 0.6;
 }
@@ -1152,7 +1152,7 @@ img {
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 10;
+  z-index: 100;
   width: 28px;
   height: 28px;
   display: flex;
@@ -1164,6 +1164,8 @@ img {
   cursor: pointer;
   border-radius: var(--radius-sm);
   transition: color 0.2s ease, background 0.2s ease;
+  pointer-events: auto;
+  transform: translateZ(40px);
 }
 
 .access-close:hover {
