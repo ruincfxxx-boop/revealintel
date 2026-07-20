@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reveal — Advanced, low-latency Open Source Intelligence pipelines tailored for the FiveM ecosystem.">
+  <title>Reveal INTEL</title>
+  <link rel="icon" type="image/png" href="https://r2.fivemanage.com/CTt82m6vQmfGfVrSZjpk0/revealpfp.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ===== Navigation ===== -->
+  <nav class="nav" id="main-nav">
+    <div class="nav-inner">
+      <a class="nav-link active" href="#home">Home</a>
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
+      <a class="nav-link" href="#api-console">API Console</a>
+      <a class="nav-link" href="#updates">Updates</a>
+      <a class="nav-link" href="#contact">Contact</a>
+      <a class="nav-cart" href="#cart" id="nav-cart-btn" title="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+      </a>
+      <div class="nav-sparkle" title="Settings">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275z"/>
+        </svg>
+      </div>
+      <a class="nav-access" href="#" id="access-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        Access
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===== HOME / HERO ===== -->
+  <div class="scroll-section" id="home">
+    <section class="hero">
+      <h1 class="hero-title animate-in">Reveal</h1>
+      <p class="hero-description animate-in animate-delay-1">
+        Advanced, low-latency Open Source Intelligence pipelines tailored for the
+        FiveM ecosystem. Track endpoints, structure schema arrays, and secure
+        diagnostics instantly.
+      </p>
+      <div class="stats-row animate-in animate-delay-2">
+        <div class="stat-item">
+          <div class="stat-value" data-count="16.1" data-suffix="M">16.1M</div>
+          <div class="stat-label">Indexed Records</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" data-count="14" data-suffix="ms">14ms</div>
+          <div class="stat-label">Avg Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" data-count="99.9" data-suffix="%">99.9%</div>
+          <div class="stat-label">Uptime Array</div>
+        </div>
+      </div>
+      <a href="#features" class="btn-outline">Explore Platform</a>
+    </section>
+  </div>
+
+  <!-- ===== FEATURES ===== -->
+  <div class="scroll-section" id="features">
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">Network Intelligence Modules</h2>
+        <p class="section-subtitle scroll-reveal">
+          Deep insight arrays architectural layouts configured for game server
+          analytical diagnostics.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card scroll-reveal">
+            <div class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              <span class="feature-card-title">Endpoint Analytics</span>
+            </div>
+            <p class="feature-card-desc">
+              Map targeted routing nodes and infrastructure configurations instantly via
+              programmatic mapping utilities.
+            </p>
+          </div>
+          <div class="feature-card scroll-reveal">
+            <div class="feature-card-icon">
+              <span class="feature-card-title">Exploit Resolution</span>
+            </div>
+            <p class="feature-card-desc">
+              Detect leaked payloads, structural vulnerabilities, and configuration flaws before
+              they impact production environments.
+            </p>
+          </div>
+          <div class="feature-card scroll-reveal">
+            <div class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
+              <span class="feature-card-title">Unified Schema Database</span>
+            </div>
+            <p class="feature-card-desc">
+              Access structured indexing cross-referenced against historical multiplayer
+              ecosystem records.
+            </p>
+          </div>
+          <div class="feature-card scroll-reveal">
+            <div class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              <span class="feature-card-title">Real-Time Decryption</span>
+            </div>
+            <p class="feature-card-desc">
+              Decompile server asset variations and handshake formats dynamically with
+              advanced algorithmic decryption layers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== API CONSOLE ===== -->
+  <div class="scroll-section" id="api-console">
+    <section class="api-section">
+      <div class="container">
+        <div class="api-layout scroll-reveal">
+          <div class="api-left">
+            <h2 class="api-title">Developer API Matrix</h2>
+            <p class="api-desc">
+              Query endpoint configurations seamlessly with standardized
+              JSON returns structured for developer workflows.
+            </p>
+            <a href="#" class="btn-filled">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+              GET /v1/endpoint
+            </a>
+          </div>
+          <div class="terminal" id="api-terminal">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+              </div>
+              <span class="terminal-title">API_CONSOLE.SH</span>
+              <span class="terminal-live">LIVE</span>
+            </div>
+            <div class="terminal-body">
+              <div><span class="comment"># Querying standard mapping nodes config array.</span></div>
+              <div><span class="prompt">Revealpoint:~$</span> <span class="command">curl -X GET https://api.Reveal.io/v1/endpoint</span></div>
+              <br>
+              <div><span class="bracket">{</span></div>
+              <div>&nbsp;&nbsp;<span class="key">"status"</span>: <span class="string">"authenticated"</span>,</div>
+              <div>&nbsp;&nbsp;<span class="key">"node"</span>: <span class="string">"US EAST 01"</span>,</div>
+              <div>&nbsp;&nbsp;<span class="key">"payload"</span>: <span class="bracket">{</span></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"ip_address"</span>: <span class="string">"192.168.1.254"</span>,</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"active_handshakes"</span>: <span class="number">142</span>,</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"secure"</span>: <span class="boolean">true</span></div>
+              <div>&nbsp;&nbsp;<span class="bracket">}</span></div>
+              <div><span class="bracket">}</span></div>
+              <div><span class="typing-cursor"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Log Box -->
+        <div class="syslog-box scroll-reveal">
+          <h3 class="syslog-title">System Network Diagnostic Logging</h3>
+          <p class="syslog-subtitle">Standardized capture sequence verifying targeted interface structures within current frameworks.</p>
+          <div class="syslog-output">
+            [SYSTEM_LOG] SECURE ROUTE CHECK // INBOUND MATRIX OK // LATENCY ARRAY [14ms, 12ms, 15ms]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration Flowchart -->
+    <section class="flowchart-section">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">Integration Flowchart</h2>
+        <p class="section-subtitle scroll-reveal">
+          Deploy your access credentials to raw terminal systems in three explicit
+          structural processes.
+        </p>
+        <div class="steps-grid">
+          <div class="step-card scroll-reveal">
+            <div class="step-number">01 / Account</div>
+            <h3 class="step-title">Initialize Identity</h3>
+            <p class="step-desc">
+              Authenticate your configuration structure inside the
+              core authorization console matrix wrapper.
+            </p>
+          </div>
+          <div class="step-card scroll-reveal">
+            <div class="step-number">02 / Keyset</div>
+            <h3 class="step-title">Provision Token Arrays</h3>
+            <p class="step-desc">
+              Generate cryptographic secure tokens dedicated to
+              specific microservice applications.
+            </p>
+          </div>
+          <div class="step-card scroll-reveal">
+            <div class="step-number">03 / Stream</div>
+            <h3 class="step-title">Ingest Intel Targets</h3>
+            <p class="step-desc">
+              Pipe raw metadata structures straight to your
+              localized framework instances without interruption.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== PRICING ===== -->
+  <div class="scroll-section" id="pricing">
+    <section class="pricing-section">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">Access Tiers</h2>
+        <p class="section-subtitle scroll-reveal">
+          Select a structured tier matching your intelligence requirements
+          and operational throughput capacity.
+        </p>
+        <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+          <div class="pricing-card scroll-reveal">
+            <div class="pricing-tier">Plus Plan</div>
+            <div class="pricing-price">$10 <span>/ mo</span></div>
+            <p class="pricing-desc">Enhanced pipelines for active intelligence teams.</p>
+            <ul class="pricing-features">
+              <li>5,000 queries / day</li>
+              <li>Fast response time</li>
+              <li>Priority support</li>
+              <li>Full API access</li>
+            </ul>
+            <div style="display:flex; flex-direction:column; gap: 8px;">
+              <button class="pricing-btn add-to-cart-btn" data-plan="plus" data-price="10" data-name="Plus Plan (Monthly)">Subscribe Monthly</button>
+              <button class="pricing-btn add-to-cart-btn" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);" data-plan="plus-lifetime" data-price="45" data-name="Plus Plan (Lifetime)">Lifetime Access ($45)</button>
+            </div>
+          </div>
+          <div class="pricing-card featured scroll-reveal">
+            <div class="pricing-tier">Pro Plan</div>
+            <div class="pricing-price">$25 <span>/ mo</span></div>
+            <p class="pricing-desc">Advanced data sets and unlimited rate limits.</p>
+            <ul class="pricing-features">
+              <li>Unlimited queries</li>
+              <li>14ms avg response</li>
+              <li>Priority support</li>
+              <li>Full API access</li>
+              <li>Schema database</li>
+              <li>Webhook integrations</li>
+            </ul>
+            <div style="display:flex; flex-direction:column; gap: 8px;">
+              <button class="pricing-btn add-to-cart-btn" data-plan="pro" data-price="25" data-name="Pro Plan (Monthly)">Subscribe Monthly</button>
+              <button class="pricing-btn add-to-cart-btn" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);" data-plan="pro-lifetime" data-price="75" data-name="Pro Plan (Lifetime)">Lifetime Access ($75)</button>
+            </div>
+          </div>
+          <div class="pricing-card scroll-reveal">
+            <div class="pricing-tier">Enterprise</div>
+            <div class="pricing-price">Custom</div>
+            <p class="pricing-desc">Dedicated infrastructure for large-scale operations.</p>
+            <ul class="pricing-features">
+              <li>Dedicated nodes</li>
+              <li>Custom SLA</li>
+              <li>24/7 direct support</li>
+              <li>Full decryption suite</li>
+              <li>White-label options</li>
+              <li>On-premise deployment</li>
+            </ul>
+            <button class="pricing-btn add-to-cart-btn" data-plan="enterprise" data-price="999" data-name="Enterprise Plan">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== UPDATES ===== -->
+  <div class="scroll-section" id="updates">
+    <section class="updates-section">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">Updates</h2>
+        <p class="section-subtitle scroll-reveal">
+          Track our latest database enhancements, log additions, and platform
+          improvements.
+        </p>
+        <div class="updates-timeline">
+          <div class="update-entry scroll-reveal">
+            <div class="update-date">July 14, 2026</div>
+            <h3 class="update-title">Added Logs</h3>
+            <div class="update-tags">
+              <span class="update-tag">tmfrz</span>
+              <span class="update-tag">mighetto</span>
+              <span class="update-tag">cashflow</span>
+              <span class="update-tag">getback</span>
+              <span class="update-tag">serenity</span>
+              <span class="update-tag">restorecord</span>
+              <span class="update-tag">lavishrp</span>
+              <span class="update-tag">paradoxrp</span>
+              <span class="update-tag">dynastyrp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== CONTACT ===== -->
+  <div class="scroll-section" id="contact">
+    <section class="contact-section">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">Contact</h2>
+        <p class="section-subtitle scroll-reveal">
+          Reach out for integration support, enterprise inquiries, or partnership opportunities.
+        </p>
+        <div class="contact-grid">
+          <div class="contact-info scroll-reveal">
+            <div class="contact-info-item">
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value">contact@Reveal.io</div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-label">Discord</div>
+              <div class="contact-info-value">discord.gg/Reveal</div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-label">Response Time</div>
+              <div class="contact-info-value">Usually within 24 hours</div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-label">Status</div>
+              <div class="contact-info-value" style="color: var(--accent-green);">● All Systems Operational</div>
+            </div>
+          </div>
+          <form class="contact-form scroll-reveal" id="contact-form" onsubmit="return false;">
+            <input class="contact-input" type="text" placeholder="Name" id="contact-name">
+            <input class="contact-input" type="email" placeholder="Email" id="contact-email">
+            <input class="contact-input" type="text" placeholder="Subject" id="contact-subject">
+            <textarea class="contact-textarea" placeholder="Message" id="contact-message"></textarea>
+            <button class="contact-submit" type="submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== CART ===== -->
+  <div class="scroll-section" id="cart" style="display:none;">
+    <section class="section cart-section">
+      <div class="container">
+        <h2 class="section-title">Your Cart</h2>
+        <p class="section-subtitle">Review your selected plans before checkout.</p>
+
+        <!-- Empty State -->
+        <div class="cart-empty" id="cart-empty">
+          <div class="cart-empty-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </div>
+          <h3 class="cart-empty-title">Your cart is empty</h3>
+          <p class="cart-empty-desc">Browse our access tiers and add a plan to get started.</p>
+          <a href="#pricing" class="btn-outline cart-browse-btn">Browse Plans</a>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="cart-items-wrap" id="cart-items-wrap" style="display:none;">
+          <div class="cart-items" id="cart-items">
+            <!-- Items rendered by JS -->
+          </div>
+
+          <div class="cart-summary">
+            <div class="cart-summary-row">
+              <span>Subtotal</span>
+              <span id="cart-subtotal">$0.00</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>Platform fee</span>
+              <span id="cart-fee">$0.00</span>
+            </div>
+            <div class="cart-summary-divider"></div>
+            <div class="cart-summary-row cart-summary-total">
+              <span>Total</span>
+              <span id="cart-total">$0.00</span>
+            </div>
+            <div class="cart-actions">
+              <a href="#pricing" class="btn-outline cart-continue-btn">Continue Shopping</a>
+              <button class="cart-checkout-btn" id="cart-checkout-btn">
+                Proceed to Checkout
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== CHECKOUT ===== -->
+  <div class="scroll-section" id="checkout" style="display:none;">
+    <section class="section checkout-section">
+      <div class="container">
+        <h2 class="section-title">Checkout</h2>
+        <p class="section-subtitle">Complete your order to activate your intelligence tier.</p>
+
+        <div class="checkout-layout">
+          <!-- Payment Form -->
+          <div class="checkout-form-wrap">
+            <div class="checkout-block">
+              <h3 class="checkout-block-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                Account Details
+              </h3>
+              <div class="checkout-field-row">
+                <div class="checkout-field">
+                  <label class="checkout-label">Full Name</label>
+                  <input class="checkout-input" type="text" placeholder="John Doe" id="checkout-name">
+                </div>
+                <div class="checkout-field">
+                  <label class="checkout-label">Email</label>
+                  <input class="checkout-input" type="email" placeholder="john@example.com" id="checkout-email">
+                </div>
+              </div>
+              <div class="checkout-field">
+                <label class="checkout-label">Discord ID</label>
+                <input class="checkout-input" type="text" placeholder="user#0001" id="checkout-discord">
+              </div>
+            </div>
+
+            <div class="checkout-block">
+              <h3 class="checkout-block-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+                Payment Method
+              </h3>
+              <div class="checkout-payment-methods">
+                <label class="checkout-payment-option active">
+                  <input type="radio" name="payment" value="stripe" checked>
+                  <span class="checkout-payment-radio"></span>
+                  <span>Stripe (Card)</span>
+                </label>
+                <label class="checkout-payment-option">
+                  <input type="radio" name="payment" value="crypto">
+                  <span class="checkout-payment-radio"></span>
+                  <span>Crypto</span>
+                </label>
+                <label class="checkout-payment-option">
+                  <input type="radio" name="payment" value="cashapp">
+                  <span class="checkout-payment-radio"></span>
+                  <span>CashApp</span>
+                </label>
+                <label class="checkout-payment-option">
+                  <input type="radio" name="payment" value="venmo">
+                  <span class="checkout-payment-radio"></span>
+                  <span>Venmo</span>
+                </label>
+              </div>
+
+              <!-- Stripe Card Input Placeholder -->
+              <div id="payment-details-stripe">
+                <div class="checkout-field">
+                  <label class="checkout-label">Card Number</label>
+                  <input class="checkout-input" type="text" placeholder="4242 4242 4242 4242" id="checkout-card" maxlength="19">
+                </div>
+                <div class="checkout-field-row">
+                  <div class="checkout-field">
+                    <label class="checkout-label">Expiry</label>
+                    <input class="checkout-input" type="text" placeholder="MM / YY" id="checkout-expiry" maxlength="7">
+                  </div>
+                  <div class="checkout-field">
+                    <label class="checkout-label">CVC</label>
+                    <input class="checkout-input" type="text" placeholder="123" id="checkout-cvc" maxlength="4">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Crypto Details -->
+              <div id="payment-details-crypto" style="display:none; font-size:12px; line-height:1.6; color:var(--text-secondary);">
+                <p style="margin-bottom:8px;">Send exact amount to one of the following addresses:</p>
+                <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:4px; font-family:var(--font-mono); font-size:11px;">
+                  <strong>LTC:</strong> LhHWmjm1SZE5wW4NGvRCi4Q8KtEQZVEjBf<br>
+                  <strong>BTC:</strong> bc1qvcvlwujgpf9qxr3p9t8v9lyfalfszzjscexxvn<br>
+                  <strong>ETH:</strong> 0x565aa21092180F5f8B204Aabf3Dd6a2de6224342<br>
+                  <strong>USDT/USDC:</strong> 0x565aa21092180F5f8B204Aabf3Dd6a2de6224342<br>
+                  <strong>USDC (Alt):</strong> 0xB3B6bC33F14d3049c0A08B97aC6e547a54049fd7<br>
+                  <strong>SOL:</strong> A1Du9XZ8sPf4kiGiYsfKWtmdormwo7a9zj6gBVX7t1ZR
+                </div>
+              </div>
+
+              <!-- CashApp Details -->
+              <div id="payment-details-cashapp" style="display:none; font-size:13px; color:var(--text-secondary);">
+                Send payment to CashApp: <strong style="color:var(--text-primary);">$liammot</strong>
+              </div>
+
+              <!-- Venmo Details -->
+              <div id="payment-details-venmo" style="display:none; font-size:13px; color:var(--text-secondary);">
+                Send payment to Venmo: <strong style="color:var(--text-primary);">@closxt</strong>
+              </div>
+            </div>
+
+            <button class="checkout-pay-btn" id="checkout-pay-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span id="checkout-pay-text">Pay $0.00</span>
+            </button>
+          </div>
+
+          <!-- Order Summary Sidebar -->
+          <div class="checkout-sidebar">
+            <div class="checkout-block">
+              <h3 class="checkout-block-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Order Summary
+              </h3>
+              <div id="checkout-items">
+                <!-- Rendered by JS -->
+              </div>
+              <div class="cart-summary-divider"></div>
+              <div class="cart-summary-row">
+                <span>Subtotal</span>
+                <span id="checkout-subtotal">$0.00</span>
+              </div>
+              <div class="cart-summary-row">
+                <span>Platform fee</span>
+                <span id="checkout-fee">$0.00</span>
+              </div>
+              <div class="cart-summary-divider"></div>
+              <div class="cart-summary-row cart-summary-total">
+                <span>Total</span>
+                <span id="checkout-total">$0.00</span>
+              </div>
+            </div>
+            <a href="#cart" class="btn-outline" style="width:100%;justify-content:center;margin-top:12px;">← Back to Cart</a>
+          </div>
+        </div>
+
+        <!-- Success State (hidden by default) -->
+        <div class="checkout-success" id="checkout-success" style="display:none;">
+          <div class="checkout-success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3 class="checkout-success-title">Payment Successful</h3>
+          <p class="checkout-success-desc">Your access tier has been activated. Check your email for API credentials and onboarding instructions.</p>
+          <div class="checkout-success-details" id="checkout-success-details">
+            <!-- Rendered by JS -->
+          </div>
+          <a href="#home" class="btn-outline" style="margin-top:24px;">Return to Home</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Access Gateway Modal ===== -->
+  <div class="access-overlay" id="access-overlay">
+    <div class="access-card" id="access-card">
+      <button class="access-close" id="access-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="access-card-glow" id="access-card-glow"></div>
+      <div class="access-card-content">
+        <div class="access-logo"><span>R</span></div>
+        <h2 class="access-title">Access Gateway</h2>
+        <div class="access-tabs">
+          <button class="access-tab active" data-tab="signin">Sign In</button>
+          <button class="access-tab" data-tab="signup">Sign Up</button>
+        </div>
+        <div class="access-tab-panel active" id="tab-signin">
+          <p class="access-hint">Enter your access key</p>
+          <div class="access-input-wrap">
+            <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+            </svg>
+            <input class="access-input" type="text" placeholder="Access Token / API Key" id="access-token" required>
+          </div>
+          <div class="access-input-group" style="margin-top: 16px;">
+            <div id="captcha-question" style="color: #60a5fa; font-family: var(--font-mono); font-size: 13px; margin-bottom: 8px;">Loading Captcha...</div>
+            <input class="access-input" type="number" placeholder="Enter Answer" id="captcha-answer" required>
+            <input type="hidden" id="captcha-id">
+          </div>
+          <button class="access-submit" id="access-submit">
+            Sign In
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+        <div class="access-tab-panel" id="tab-signup">
+          <p class="access-hint">Create a new account</p>
+          <div class="access-input-wrap">
+            <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input class="access-input" type="text" placeholder="Username" id="access-username">
+          </div>
+          <div class="access-input-wrap">
+            <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input class="access-input" type="password" placeholder="Password" id="access-password">
+          </div>
+          <div class="access-input-wrap">
+            <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input class="access-input" type="email" placeholder="Email" id="access-email" required>
+          </div>
+          <div class="access-input-wrap">
+            <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+            <input class="access-input" type="text" placeholder="Discord ID (optional)" id="access-discord">
+          </div>
+          <div class="access-input-wrap">
+            <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+            </svg>
+            <input class="access-input" type="text" placeholder="Invite Code (optional)" id="access-invite">
+          </div>
+          <div class="access-input-group" style="margin-top: 16px;">
+            <div id="captcha-question-signup" style="color: #60a5fa; font-family: var(--font-mono); font-size: 13px; margin-bottom: 8px;">Loading Captcha...</div>
+            <input class="access-input" type="number" placeholder="Enter Answer" id="captcha-answer-signup" required>
+            <input type="hidden" id="captcha-id-signup">
+          </div>
+          <button class="access-submit" id="access-signup-submit">
+            Create Account
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">© 2026 Reveal. All rights reserved. Built for the FiveM intelligence community.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Reveal INTEL</title>
+  <link rel="icon" type="image/png" href="https://r2.fivemanage.com/CTt82m6vQmfGfVrSZjpk0/revealpfp.png">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+<body class="dashboard-body">
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Dotted Background Canvas -->
+  <div class="dash-bg-dots"></div>
+
+  <!-- Floating Nav -->
+  <nav class="dash-nav">
+    <div class="dash-nav-inner">
+      <a href="index.html" class="dash-nav-link">Home</a>
+      <a href="index.html#pricing" class="dash-nav-link">Pricing</a>
+      <a href="#" class="dash-nav-link active">Dashboard</a>
+      <a href="index.html#contact" class="dash-nav-link">Contact</a>
+      <div class="dash-nav-divider"></div>
+      <button class="dash-icon-btn" id="theme-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <div class="dash-user-menu-wrapper">
+        <div class="dash-user-dropdown" id="dash-user-dropdown">
+          <svg class="dash-user-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span id="nav-key-display">Loading...</span>
+          <svg class="dash-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+        <div class="dash-user-menu" id="dash-user-menu">
+          <a href="dashboard.html" class="dash-menu-item">Dashboard</a>
+          <a href="#" id="sign-out-btn" class="dash-menu-item dash-menu-signout">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="dash-main">
+    <div class="dash-container">
+      
+      <!-- Header -->
+      <header class="dash-header">
+        <h1 class="dash-title">Dashboard</h1>
+        <p class="dash-subtitle">Welcome back, <span id="header-key-display" class="dash-highlight-key">Loading...</span></p>
+      </header>
+
+      <!-- Stats Grid -->
+      <div class="dash-stats-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-value">90+</div>
+          <div class="dash-stat-label">LOG SOURCES</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-value">45M+</div>
+          <div class="dash-stat-label">IDENTIFIERS</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-value" style="font-family: var(--font-mono);">Instant</div>
+          <div class="dash-stat-label">LOOKUP</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-value" style="font-family: var(--font-mono);">Live</div>
+          <div class="dash-stat-label">API STATUS</div>
+        </div>
+      </div>
+
+      <!-- Lookup Module -->
+      <div class="dash-lookup-module">
+        <h2 class="dash-module-title">Identifier Lookup</h2>
+        <p class="dash-module-subtitle">Enter a Discord ID, UUID, Steam Hex, IP, or HWID</p>
+        
+        <form class="dash-search-form" id="lookup-form" onsubmit="return false;">
+          <input type="text" class="dash-search-input" placeholder="e.g., 1124941838305845319" id="lookup-input">
+          <button type="submit" class="dash-search-btn" id="lookup-btn">
+            Search &rarr;
+          </button>
+        </form>
+
+        <div class="dash-view-toggle">
+          <button class="view-toggle-btn active" id="view-list-btn">List View</button>
+          <button class="view-toggle-btn" id="view-graph-btn">Graph View</button>
+        </div>
+
+        <div class="dash-lookup-results" id="lookup-results" style="display:none;">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="dash-graph-results" id="graph-results" style="display:none;">
+          <!-- Vis.js Graph Canvas -->
+        </div>
+      </div>
+
+      <!-- Bottom Info Cards -->
+      <div class="dash-info-grid">
+        <div class="dash-info-card">
+          <h3 class="dash-info-title">90+ Log Sources</h3>
+          <p class="dash-info-text">
+            Central Valley, Cashflow RP, Club 44, TFB Logs, West Coast LA, Rage RP, Trench
+            Town RP, and more.
+          </p>
+        </div>
+        <div class="dash-info-card">
+          <h3 class="dash-info-title">API Access</h3>
+          <p class="dash-info-text">
+            Your API key is active. Batch lookups available for enterprise users.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <!-- Context Menu for Nodes -->
+  <div id="node-context-menu" class="node-context-menu" style="display:none;">
+    <div class="context-header">NODE OPTIONS <span class="context-badge">QUICK</span></div>
+    <div class="context-item" id="ctx-copy">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Copy Display Label <span>&rsaquo;</span>
+    </div>
+    <div class="context-item" id="ctx-duplicate">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+      Duplicate Node <span>&rsaquo;</span>
+    </div>
+    <div class="context-item" id="ctx-unlink">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+      Unlink Connections <span>&rsaquo;</span>
+    </div>
+    <div class="context-item danger" id="ctx-delete">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+      Delete Node <span>&rsaquo;</span>
+    </div>
+    <div class="context-footer" id="ctx-close">
+      Close Menu
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

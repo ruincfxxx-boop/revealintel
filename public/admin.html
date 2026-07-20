@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Reveal INTEL</title>
+  <link rel="icon" type="image/png" href="https://r2.fivemanage.com/CTt82m6vQmfGfVrSZjpk0/revealpfp.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Admin specific styles */
+    .admin-body {
+      background: transparent;
+      color: #fff;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .admin-lock-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .admin-lock-box {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    .admin-lock-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .admin-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      color: #fff;
+      margin-bottom: 16px;
+      outline: none;
+      font-family: var(--font-mono);
+    }
+    .admin-input:focus {
+      border-color: rgba(255,255,255,0.3);
+    }
+    .admin-btn {
+      width: 100%;
+      padding: 12px 16px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .admin-btn:hover {
+      background: #eee;
+    }
+    .admin-panel-content {
+      display: none;
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 20px;
+    }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+    }
+    .admin-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .admin-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: rgba(255,255,255,0.9);
+    }
+    .admin-label {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .admin-select {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      color: #fff;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .admin-table th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .admin-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+    }
+    .key-mono {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+    }
+    .badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-owner { background: rgba(234, 179, 8, 0.1); color: #facc15; }
+    .badge-free { background: rgba(156, 163, 175, 0.1); color: #9ca3af; }
+    .badge-plus { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+    .badge-pro { background: rgba(168, 85, 247, 0.1); color: #c084fc; }
+    .badge-enterprise { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+    
+    .action-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    /* Error MSG */
+    #lock-error {
+      color: #ef4444;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body class="admin-body">
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Lock Screen -->
+  <div class="admin-lock-screen" id="admin-lock">
+    <div class="admin-lock-box">
+      <h1 class="admin-lock-title">Admin Portal</h1>
+      <input type="password" class="admin-input" id="admin-pass" placeholder="Enter Master Password">
+      <button class="admin-btn" id="admin-login-btn">Authenticate</button>
+      <div id="lock-error">Invalid password.</div>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="admin-panel-content" id="admin-panel">
+    <header class="admin-header">
+      <h1 style="font-size: 28px; letter-spacing: -0.02em;">Key Management</h1>
+      <a href="index.html" class="action-btn" style="text-decoration:none;">Exit to Site</a>
+    </header>
+
+    <div class="admin-grid">
+      <!-- Generator Card -->
+      <div class="admin-card">
+        <h2 class="admin-card-title">Generate New Key</h2>
+        
+        <label class="admin-label">Select Plan</label>
+        <select class="admin-select" id="new-key-plan">
+          <option value="Owner">Owner (Unlimited)</option>
+          <option value="Free">Free Plan ($0/mo)</option>
+          <option value="Plus">Plus Plan ($19/mo)</option>
+          <option value="Pro">Pro Plan ($49/mo)</option>
+          <option value="Enterprise">Enterprise (Custom)</option>
+        </select>
+
+        <label class="admin-label">Duration</label>
+        <select class="admin-select" id="new-key-duration">
+          <option value="7">1 Week</option>
+          <option value="30">1 Month</option>
+          <option value="90">3 Months</option>
+          <option value="365">1 Year</option>
+          <option value="9999">Lifetime</option>
+        </select>
+
+        <label class="admin-label">Email (Optional)</label>
+        <input type="text" class="admin-input" id="new-key-email" placeholder="admin@reveal.io" style="margin-bottom: 16px;">
+
+        <button class="admin-btn" id="generate-key-btn">Generate Key</button>
+      </div>
+
+      <!-- Keys Table Card -->
+      <div class="admin-card">
+        <h2 class="admin-card-title">Active Keys</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>API Key</th>
+              <th>Email</th>
+              <th>Plan</th>
+              <th>Expires</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="keys-tbody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
