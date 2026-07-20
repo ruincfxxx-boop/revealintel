@@ -40,7 +40,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html', 'htm'] }));
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -159,7 +159,7 @@ app.get('/api/admin/keys', async (req, res) => {
 // 2. GENERATE - Admin Key Generator (No payment needed)
 app.post('/api/generate', async (req, res) => {
   const { adminToken, plan, email, durationDays } = req.body;
-  if (adminToken !== 'ADMIN_SECRET_KEY') return res.status(403).json({error: 'Forbidden'});
+  if (adminToken !== 'u9xMpsytG7XdNdVk8GHr') return res.status(403).json({error: 'Forbidden'});
   
   const newKey = {
     id: Date.now(),

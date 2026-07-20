@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Master password
   loginBtn.addEventListener('click', () => {
-    if (passInput.value === 'R3v3al_0wN3r!2026') {
+    if (passInput.value === 'u9xMpsytG7XdNdVk8GHr') {
       lockScreen.style.display = 'none';
       adminPanel.style.display = 'block';
       renderKeys();
@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const email = emailInput.value.trim();
 
     try {
-      const res = await fetch('/api/admin/generate', {
+      const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, durationDays, email })
+        body: JSON.stringify({ adminToken: passInput.value, plan, durationDays, email })
       });
       const data = await res.json();
       
