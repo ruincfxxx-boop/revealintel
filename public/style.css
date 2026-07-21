@@ -2125,3 +2125,322 @@ body.light-mode, .dashboard-body.light-mode {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
+
+/* ===== SECURE GATEWAY UI ===== */
+.access-card.new-ui {
+  width: 900px;
+  max-width: 95%;
+  display: flex;
+  flex-direction: row;
+  background: #12141a;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+  overflow: hidden;
+  padding: 0;
+}
+
+.new-ui .access-sidebar {
+  width: 260px;
+  background: #16181f;
+  padding: 30px 20px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.new-ui .access-sidebar-header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  padding-left: 10px;
+}
+
+.new-ui .access-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255,255,255,0.5);
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.new-ui .access-tab:hover {
+  background: rgba(255,255,255,0.02);
+  color: #fff;
+}
+
+.new-ui .access-tab.active {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.new-ui .tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  color: #60a5fa;
+}
+
+.new-ui .access-main {
+  flex: 1;
+  padding: 40px 60px;
+  background: #12141a;
+  position: relative;
+}
+
+.new-ui .access-main-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #60a5fa;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.new-ui .access-huge-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+}
+
+.new-ui .access-desc {
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+  max-width: 80%;
+}
+
+.new-ui .access-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.new-ui .badge {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.new-ui .access-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.new-ui .access-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.new-ui .access-input {
+  width: 100%;
+  background: #16181f;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 14px 15px 14px 45px;
+  color: #fff;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  transition: border-color 0.2s;
+}
+
+.new-ui .access-input:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.2);
+}
+
+.new-ui .access-input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.3);
+}
+
+.new-ui .access-submit {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.2s;
+}
+
+.new-ui .access-submit:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.new-ui .access-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  margin: 25px 0;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.new-ui .access-divider::before,
+.new-ui .access-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.new-ui .access-divider span {
+  padding: 0 15px;
+}
+
+.new-ui .access-discord-btn {
+  width: 100%;
+  background: linear-gradient(180deg, #5865F2 0%, #4752C4 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.new-ui .access-discord-btn:hover {
+  filter: brightness(1.1);
+}
+
+.new-ui .access-recover-btn {
+  width: 100%;
+  background: #16181f;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.7);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.new-ui .access-recover-btn:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+.new-ui .access-subhint {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 25px;
+}
+
+.new-ui .access-cloudflare {
+  margin-top: 20px;
+  background: #16181f;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.new-ui .cf-header {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.new-ui .cf-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 10px 15px;
+}
+
+.new-ui .cf-success {
+  width: 12px;
+  height: 12px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+
+.new-ui .cf-box > span {
+  color: #fff;
+  font-size: 13px;
+  flex: 1;
+}
+
+.new-ui .cf-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.new-ui .cf-logo > span {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+}
+
+.new-ui .cf-links {
+  font-size: 8px;
+  color: rgba(255,255,255,0.3);
+}
+
+.new-ui .access-close {
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}

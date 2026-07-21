@@ -875,6 +875,58 @@ document.addEventListener('DOMContentLoaded', () => {
         contactSubmitBtn.disabled = false;
       }
     });
+    });
+  }
+
+  // ============================
+  // Modal Claim Key Logic
+  // ============================
+  const modalClaimBtn = document.getElementById('modal-claim-key-btn');
+  const claimCurrentKey = document.getElementById('claim-current-key');
+  const claimNewKey = document.getElementById('claim-new-key');
+  const claimResponse = document.getElementById('claim-key-response');
+
+  if (modalClaimBtn && claimCurrentKey && claimNewKey && claimResponse) {
+    modalClaimBtn.addEventListener('click', async () => {
+      const currentKey = claimCurrentKey.value.trim();
+      const newKey = claimNewKey.value.trim();
+      
+      if (!currentKey || !newKey) {
+        claimResponse.style.display = 'block';
+        claimResponse.style.color = '#ef4444';
+        claimResponse.textContent = 'Please enter both keys.';
+        return;
+      }
+
+      modalClaimBtn.textContent = 'CLAIMING...';
+      try {
+        const res = await fetch('/api/claim', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentKey, newKey })
+        });
+        const data = await res.json();
+        
+        claimResponse.style.display = 'block';
+        if (data.success) {
+          claimResponse.style.color = '#4ade80';
+          claimResponse.textContent = 'Successfully linked! Logging you in...';
+          localStorage.setItem('reveal_access_key', newKey);
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 1500);
+        } else {
+          claimResponse.style.color = '#ef4444';
+          claimResponse.textContent = data.error || 'Failed to claim key.';
+        }
+      } catch (err) {
+        claimResponse.style.display = 'block';
+        claimResponse.style.color = '#ef4444';
+        claimResponse.textContent = 'Network error. Please try again.';
+      } finally {
+        modalClaimBtn.textContent = 'CLAIM DISCORD KEY';
+      }
+    });
   }
 
 });

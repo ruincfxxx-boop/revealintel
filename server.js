@@ -578,6 +578,46 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
+// Claim Discord Key
+app.post('/api/claim', async (req, res) => {
+  const { currentKey, newKey } = req.body;
+  
+  if (!currentKey || !newKey) {
+    return res.status(400).json({ error: 'Both keys are required.' });
+  }
+  
+  try {
+    // 1. Validate current key (must be a free tier key)
+    const currRes = await pool.query('SELECT * FROM api_keys WHERE key = $1', [currentKey]);
+    if (currRes.rows.length === 0) return res.status(404).json({ error: 'Current key is invalid.' });
+    const currKeyData = currRes.rows[0];
+    
+    // 2. Validate new key (must exist and not be claimed by another IP/user yet)
+    const newRes = await pool.query('SELECT * FROM api_keys WHERE key = $1', [newKey]);
+    if (newRes.rows.length === 0) return res.status(404).json({ error: 'The new key is invalid or does not exist.' });
+    const newKeyData = newRes.rows[0];
+    
+    if (newKeyData.ip && newKeyData.ip !== currKeyData.ip) {
+       return res.status(403).json({ error: 'That key has already been claimed or is linked to another IP.' });
+    }
+    
+    // 3. Link them! (Update the new key to have the old key's discord_id, ip, email, username if they exist)
+    await pool.query(
+      'UPDATE api_keys SET discord_id = $1, ip = $2, email = $3, username = $4 WHERE key = $5',
+      [currKeyData.discord_id || null, currKeyData.ip || null, currKeyData.email || null, currKeyData.username || null, newKey]
+    );
+    
+    // Optional: Delete the old free key or leave it. We'll delete it to clean up.
+    await pool.query('DELETE FROM api_keys WHERE key = $1', [currentKey]);
+    
+    res.json({ success: true, message: 'Key successfully claimed!' });
+    
+  } catch (err) {
+    console.error('Claim error:', err);
+    res.status(500).json({ error: 'Database error claiming key.' });
+  }
+});
+
 // 5. Clean Expired Keys Periodically
 setInterval(async () => {
   const now = Date.now();
