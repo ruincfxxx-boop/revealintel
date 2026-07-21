@@ -22,11 +22,23 @@ db.exec(`
     content,
     tokenize="trigram"
   );
+  
+  CREATE TABLE IF NOT EXISTS processed_files (
+    filename TEXT PRIMARY KEY,
+    imported_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
 `);
 
 const insertStmt = db.prepare('INSERT INTO search_logs (filename, content) VALUES (?, ?)');
+const markProcessedStmt = db.prepare('INSERT INTO processed_files (filename) VALUES (?)');
+const checkProcessedStmt = db.prepare('SELECT 1 FROM processed_files WHERE filename = ?');
 
 async function processFile(file) {
+  if (checkProcessedStmt.get(file)) {
+    console.log(`[SKIP] ${file} has already been imported.`);
+    return;
+  }
+
   const filePath = path.join(logsDir, file);
   console.log(`[START] Processing file: ${file}`);
   
@@ -86,6 +98,8 @@ async function processFile(file) {
   if (batch.length > 0) {
     insertMany(batch);
   }
+  
+  markProcessedStmt.run(file);
 
   console.log(`[DONE] Finished ${file} - Inserted ${insertCount} records.`);
 }
