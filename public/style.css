@@ -2182,11 +2182,10 @@ body.light-mode, .dashboard-body.light-mode {
 }
 
 .new-ui .access-tab.active {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.1);
+  background: transparent;
+  border-color: #fff;
   color: #fff;
 }
-
 .new-ui .tab-icon {
   display: flex;
   align-items: center;
@@ -2443,4 +2442,71 @@ body.light-mode, .dashboard-body.light-mode {
   top: 20px;
   right: 20px;
   z-index: 10;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.access-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.access-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #16181f;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.access-checkbox:hover {
+  border-color: rgba(255,255,255,0.1);
+}
+
+.access-checkbox input {
+  display: none;
+}
+
+.access-checkbox .checkmark {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  background: #12141a;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.access-checkbox input:checked + .checkmark {
+  background: #fff;
+  border-color: #fff;
+}
+
+.access-checkbox input:checked + .checkmark::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+.access-checkbox a {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.3);
 }
