@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent - Reveal INTEL</title>
+  <link rel="icon" type="image/png" href="https://r2.fivemanage.com/CTt82m6vQmfGfVrSZjpk0/revealpfp.png">
+  <link rel="stylesheet" href="style.css?v=agent1">
+</head>
+<body class="agent-body">
+  
+  <div class="agent-layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="agent-sidebar">
+      <div class="agent-sidebar-header">
+        <div class="agent-title">Agent</div>
+        <div class="agent-count">13/50</div>
+      </div>
+      
+      <button class="agent-new-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        New chat
+      </button>
+      
+      <div class="agent-tabs">
+        <div class="agent-tab">Chats</div>
+        <div class="agent-tab active">Projects</div>
+      </div>
+      
+      <button class="agent-new-project-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+        New project
+      </button>
+      
+      <div class="agent-list">
+        <div class="agent-list-item">
+          <svg class="agent-folder-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <div class="agent-list-info">
+            <div class="agent-list-name">Streamers</div>
+            <div class="agent-list-sub">1 chat</div>
+          </div>
+          <svg class="agent-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </div>
+      
+      <div class="agent-balance">
+        <div class="agent-balance-title">Balance</div>
+        <div class="agent-balance-value">1,853 <span>credits</span></div>
+        <div class="agent-balance-link">Add more credits</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="agent-main">
+      
+      <!-- TOP NAV -->
+      <nav class="agent-topnav">
+        <div class="agent-breadcrumbs">
+          <a href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+          <span class="slash">/</span>
+          <span>Intelligence</span>
+          <span class="slash">/</span>
+          <span class="active">Agent</span>
+        </div>
+        
+        <div class="agent-top-right">
+          <button class="agent-discord-btn" onclick="window.location.href='/api/auth/discord'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+            Join Discord
+          </button>
+          
+          <button class="agent-icon-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          </button>
+          
+          <div class="agent-user-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+        </div>
+      </nav>
+
+      <!-- AGENT HERO -->
+      <div class="agent-hero">
+        
+        <div class="agent-hero-top">
+          <div class="agent-top-left">New chat</div>
+          <div class="agent-top-right-meta">
+            <span class="credits">1,853 <span style="color:rgba(255,255,255,0.4)">credits</span></span>
+            <span class="new-chat">+ New chat</span>
+          </div>
+        </div>
+
+        <div class="agent-hero-center">
+          <div class="agent-icon-large">P</div>
+          <h1 class="agent-hero-title">Proximity Agent</h1>
+          <p class="agent-hero-desc">An autonomous investigator. Cross-references breaches, stealer logs, and platforms to build comprehensive intelligence reports.</p>
+          
+          <div class="agent-search-bar">
+            <svg class="agent-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <input type="text" class="agent-input" placeholder="Unmask an alias across the web...">
+            
+            <div class="agent-search-controls">
+              <div class="agent-dropdown">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                Any
+                <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="agent-dropdown">
+                High
+                <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <button class="agent-submit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+              </button>
+            </div>
+          </div>
+          
+          <div class="agent-hint">
+            <kbd>↵</kbd> to send
+          </div>
+        </div>
+
+        <div class="agent-hero-footer">
+          <div class="agent-stats">
+            <span><strong>24+</strong> tools</span>
+            <span class="divider"></span>
+            <span><strong>99%</strong> faster</span>
+          </div>
+          <p class="agent-disclaimer">
+            <strong>FBI-grade investigations in minutes.</strong> Correlates millions of records, links identities across platforms, and surfaces intel no human could trace alone.
+          </p>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+</body>
+</html>
