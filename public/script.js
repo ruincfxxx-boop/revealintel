@@ -873,6 +873,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } finally {
         contactSubmitBtn.textContent = 'Send Message';
         contactSubmitBtn.disabled = false;
+      }
     });
   }
 
