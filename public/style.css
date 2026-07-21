@@ -2191,7 +2191,7 @@ body.light-mode, .dashboard-body.light-mode {
   align-items: center;
   justify-content: center;
   width: 16px;
-  color: #60a5fa;
+  color: #fff;
 }
 
 .new-ui .access-main {
@@ -2204,7 +2204,7 @@ body.light-mode, .dashboard-body.light-mode {
 .new-ui .access-main-header {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: #60a5fa;
+  color: rgba(255,255,255,0.7);
   letter-spacing: 2px;
   margin-bottom: 10px;
 }
@@ -2325,7 +2325,7 @@ body.light-mode, .dashboard-body.light-mode {
 
 .new-ui .access-discord-btn {
   width: 100%;
-  background: linear-gradient(180deg, #5865F2 0%, #4752C4 100%);
+  background: #16181f;
   border: 1px solid rgba(255,255,255,0.1);
   color: #fff;
   padding: 15px;
@@ -2409,7 +2409,7 @@ body.light-mode, .dashboard-body.light-mode {
 .new-ui .cf-success {
   width: 12px;
   height: 12px;
-  background: #22c55e;
+  background: #fff;
   border-radius: 50%;
 }
 
