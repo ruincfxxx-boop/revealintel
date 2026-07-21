@@ -25,22 +25,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const activeKey = localStorage.getItem('reveal_active_key');
   
   if (activeKey) {
-    // Hide the key completely for screensharing, only show the username
+  // User Dropdown Menu
+  const userDropdownBtn = document.getElementById('dash-user-dropdown');
+  const userMenu = document.getElementById('dash-user-menu');
+  const signOutBtn = document.getElementById('sign-out-btn');
+
+  // Reveal Profile UI Population
+  const kpName = document.getElementById('kp-name');
+  const navUsername = document.getElementById('nav-username');
+  const kpActive = document.getElementById('kp-active');
+  const kpDate = document.getElementById('kp-date');
+  const kpHiddenKey = document.getElementById('kp-hidden-key');
+  const kpKeyBox = document.querySelector('.kp-key-value');
+
+  if (activeKey) {
     const username = localStorage.getItem('reveal_username') || 
                      sessionStorage.getItem('reveal_username') || 
                      activeKey.split('-')[0];
     
     if (headerKeyDisplay) headerKeyDisplay.textContent = username;
     if (navKeyDisplay) navKeyDisplay.textContent = username;
+    if (kpName) kpName.textContent = username;
+    if (navUsername) navUsername.textContent = username;
   } else {
     if (headerKeyDisplay) headerKeyDisplay.textContent = "No Active Subscription";
     if (navKeyDisplay) navKeyDisplay.textContent = "Guest";
+    if (kpName) kpName.textContent = "Guest";
+    if (navUsername) navUsername.textContent = "Guest";
   }
 
-  // User Dropdown Menu
-  const userDropdownBtn = document.getElementById('dash-user-dropdown');
-  const userMenu = document.getElementById('dash-user-menu');
-  const signOutBtn = document.getElementById('sign-out-btn');
+  // Set Current Time and Date for Reveal Dashboard
+  const now = new Date();
+  if (kpActive) {
+    kpActive.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  if (kpDate) {
+    kpDate.textContent = now.toLocaleDateString('en-GB');
+  }
+
+  // Handle Hidden Key Reveal Toggle
+  if (kpKeyBox && kpHiddenKey && activeKey) {
+    let isHidden = true;
+    kpKeyBox.style.cursor = 'pointer';
+    kpKeyBox.addEventListener('click', () => {
+      isHidden = !isHidden;
+      if (isHidden) {
+        kpHiddenKey.textContent = '••••••••••••••••';
+      } else {
+        kpHiddenKey.textContent = activeKey;
+      }
+    });
+  }
+
+  // Total Searches randomizer for demo
+  const totalSearchesEl = document.getElementById('kp-total-searches');
+  if (totalSearchesEl) {
+    totalSearchesEl.textContent = Math.floor(Math.random() * 50) + 10;
+  }
 
   if (userDropdownBtn && userMenu) {
     userDropdownBtn.addEventListener('click', (e) => {
