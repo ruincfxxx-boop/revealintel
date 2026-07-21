@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html', 'htm'] }));
 
-const { Pool } = require('pg');
+// Removed duplicate Pool declaration
 const pool = new Pool({
   host: 'aws-1-us-west-2.pooler.supabase.com',
   port: 6543,
