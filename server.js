@@ -624,10 +624,15 @@ app.post('/api/claim', async (req, res) => {
 // ============================
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || 'http://localhost:3000/api/auth/discord/callback';
+function getDynamicRedirectUri(req) {
+  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+  const host = req.get('host');
+  return `${protocol}://${host}/api/auth/discord/callback`;
+}
 
 app.get('/api/auth/discord', (req, res) => {
-  const url = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify`;
+  const dynamicRedirectUri = getDynamicRedirectUri(req);
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(dynamicRedirectUri)}&response_type=code&scope=identify`;
   res.redirect(url);
 });
 
@@ -635,13 +640,15 @@ app.get('/api/auth/discord/callback', async (req, res) => {
   const { code } = req.query;
   if (!code) return res.status(400).send('No code provided');
   
+  const dynamicRedirectUri = getDynamicRedirectUri(req);
+  
   try {
     const params = new URLSearchParams();
     params.append('client_id', DISCORD_CLIENT_ID);
     params.append('client_secret', DISCORD_CLIENT_SECRET);
     params.append('grant_type', 'authorization_code');
     params.append('code', code);
-    params.append('redirect_uri', DISCORD_REDIRECT_URI);
+    params.append('redirect_uri', dynamicRedirectUri);
 
     const tokenRes = await axios.post('https://discord.com/api/oauth2/token', params, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
