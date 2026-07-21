@@ -22,18 +22,45 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentSearchQuery = null;
 
   // Load Active Key
-  const activeKey = localStorage.getItem('reveal_active_key');
+  const activeKey = localStorage.getItem('reveal_active_key') || localStorage.getItem('reveal_access_key');
   
   if (activeKey) {
-    // Hide the key completely for screensharing, only show the username
     const username = localStorage.getItem('reveal_username') || 
                      sessionStorage.getItem('reveal_username') || 
                      activeKey.split('-')[0];
+                     
+    const plan = localStorage.getItem('reveal_plan') || 'LIFETIME';
     
-    if (headerKeyDisplay) headerKeyDisplay.textContent = username;
     if (navKeyDisplay) navKeyDisplay.textContent = username;
+    
+    // Populate Reveal Profile Card
+    const revUsernameDisplay = document.getElementById('rev-username-display');
+    const revAvatarInitials = document.getElementById('rev-avatar-initials');
+    const revAccessLevel = document.getElementById('rev-access-level');
+    const revDate = document.getElementById('rev-date');
+    const revKeyHidden = document.querySelector('.rev-key-hidden');
+    
+    if (revUsernameDisplay) revUsernameDisplay.textContent = username;
+    if (revAvatarInitials) revAvatarInitials.textContent = username.substring(0, 2).toUpperCase();
+    if (revAccessLevel) revAccessLevel.textContent = plan.toUpperCase();
+    
+    if (revDate) {
+      const now = new Date();
+      revDate.textContent = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getFullYear()}`;
+    }
+    
+    if (revKeyHidden) {
+      const revKeyBox = document.getElementById('rev-key-box');
+      if (revKeyBox) {
+        let isHidden = true;
+        revKeyBox.addEventListener('click', () => {
+          isHidden = !isHidden;
+          revKeyHidden.textContent = isHidden ? '••••••••••••••••' : activeKey;
+        });
+      }
+    }
+    
   } else {
-    if (headerKeyDisplay) headerKeyDisplay.textContent = "No Active Subscription";
     if (navKeyDisplay) navKeyDisplay.textContent = "Guest";
   }
 

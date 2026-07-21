@@ -3889,6 +3889,242 @@ body.light-mode, .dashboard-body.light-mode {
   font-family: var(--font-sans);
 }
 
+/* =========================================
+   REVEAL DASHBOARD UI REBUILD
+   ========================================= */
+
+.rev-welcome-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.rev-welcome-title {
+  font-size: 32px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+
+.rev-welcome-title span {
+  font-weight: bold;
+}
+
+.rev-buyer-tag {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.rev-welcome-subtitle {
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* PROFILE CARD */
+.rev-profile-card {
+  background: rgba(15, 15, 15, 0.8);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.rev-profile-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rev-avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  color: #fff;
+  position: relative;
+}
+
+.rev-online-dot {
+  width: 10px;
+  height: 10px;
+  background: #4ade80;
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  border: 2px solid #0f0f0f;
+}
+
+.rev-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rev-profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rev-username {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  font-family: var(--font-mono);
+}
+
+.rev-profile-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.small-tag {
+  padding: 2px 8px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rev-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--font-mono);
+}
+
+.rev-meta-item span {
+  color: rgba(255,255,255,0.9);
+}
+
+.rev-meta-item.gold-accent {
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  background: rgba(234, 179, 8, 0.05);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.rev-meta-item.gold-accent span {
+  color: #eab308;
+}
+
+.rev-profile-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.rev-key-box {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rev-key-box:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.rev-key-header {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.rev-key-value-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rev-key-hidden {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 2px;
+}
+
+/* STATS GRID */
+.rev-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.rev-stat-card {
+  background: rgba(15, 15, 15, 0.6);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.rev-stat-icon {
+  background: rgba(255,255,255,0.05);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 20px;
+}
+
+.rev-stat-val {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: var(--font-mono);
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.rev-stat-lbl {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 1px;
+}
+
 /* OVERLAY */
 .agent-overlay {
   position: fixed;
