@@ -22,10 +22,28 @@ async function startBot(pool, generateKeyString, token) {
     console.log(`[BOT] Logged in as ${client.user.tag}!`);
     try {
       console.log('[BOT] Refreshing application (/) commands.');
+      const bodyData = commands.map(c => c.toJSON());
+      
+      // 1. Deploy Globally (takes up to 1 hour to propagate)
       await rest.put(
         Routes.applicationCommands(client.user.id),
-        { body: commands.map(c => c.toJSON()) },
+        { body: bodyData },
       );
+      
+      // 2. Deploy specifically to every server the bot is currently in (INSTANT propagation!)
+      const guilds = client.guilds.cache;
+      for (const [guildId, guild] of guilds) {
+        try {
+          await rest.put(
+            Routes.applicationGuildCommands(client.user.id, guildId),
+            { body: bodyData }
+          );
+          console.log(`[BOT] Instantly deployed commands to server: ${guild.name} (${guildId})`);
+        } catch (e) {
+          console.error(`[BOT] Failed to deploy to guild ${guildId}:`, e.message);
+        }
+      }
+      
       console.log('[BOT] Successfully reloaded application (/) commands.');
     } catch (error) {
       console.error(error);
@@ -33,7 +51,6 @@ async function startBot(pool, generateKeyString, token) {
   });
 
   client.on('interactionCreate', async interaction => {
-    // Check Authorization for ALL interactions
     if (!ALLOWED_USERS.includes(interaction.user.id)) {
       if (interaction.isRepliable()) {
         return interaction.reply({ content: '⛔ You are not authorized to use this command.', ephemeral: true });
