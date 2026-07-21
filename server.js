@@ -625,6 +625,9 @@ app.post('/api/claim', async (req, res) => {
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
 function getDynamicRedirectUri(req) {
+  if (process.env.DISCORD_REDIRECT_URI) {
+    return process.env.DISCORD_REDIRECT_URI;
+  }
   const protocol = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.get('host');
   return `${protocol}://${host}/api/auth/discord/callback`;
