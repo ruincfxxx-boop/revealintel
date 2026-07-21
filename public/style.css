@@ -4074,9 +4074,11 @@ body.light-mode, .dashboard-body.light-mode {
 
 .rev-key-hidden {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 11px;
   color: rgba(255,255,255,0.8);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  word-break: break-all;
+  max-width: 250px;
 }
 
 /* STATS GRID */
