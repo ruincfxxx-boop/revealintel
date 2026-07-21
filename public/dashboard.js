@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       localStorage.removeItem('reveal_active_key');
       localStorage.removeItem('rawintel_active_key');
-      window.location.href = 'index.html';
+      window.location.href = '/';
     });
   }
 
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lookupResults.style.display = 'block';
       lookupResults.style.color = '#fff';
       lookupResults.style.borderColor = 'rgba(255,255,255,0.05)';
-      lookupResults.innerHTML = `Querying 90+ data sources for <strong>${query}</strong>...`;
+      lookupResults.innerHTML = `Querying 250+ data sources for <strong>${query}</strong>...`;
 
       // Real API Fetch
       fetch(`/api/search?q=${encodeURIComponent(query)}&key=${encodeURIComponent(activeKey)}`)
