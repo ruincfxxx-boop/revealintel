@@ -45,16 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const plan = planSelect.value;
     const durationDays = durationSelect.value;
     const email = emailInput.value.trim();
+    const discordId = document.getElementById('new-key-discord') ? document.getElementById('new-key-discord').value.trim() : '';
 
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ adminToken: passInput.value, plan, durationDays, email })
+        body: JSON.stringify({ adminToken: passInput.value, plan, durationDays, email, discordId })
       });
       const data = await res.json();
       if (data.success) {
         emailInput.value = '';
+        if (document.getElementById('new-key-discord')) document.getElementById('new-key-discord').value = '';
         renderKeys();
       } else {
         alert(data.error || 'Failed to generate key');

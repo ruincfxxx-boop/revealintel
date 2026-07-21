@@ -187,23 +187,35 @@ app.post('/api/contact', async (req, res) => {
 
 // 2. GENERATE - Admin Key Generator (No payment needed)
 app.post('/api/generate', async (req, res) => {
-  const { adminToken, plan, email, durationDays } = req.body;
+  const { adminToken, plan, email, durationDays, discordId } = req.body;
   if (adminToken !== 'u9xMpsytG7XdNdVk8GHr') return res.status(403).json({error: 'Forbidden'});
   
-  const newKey = {
-    id: Date.now(),
-    key: generateKeyString(email, plan),
-    plan,
-    email: email || 'Admin Generated',
-    durationDays: parseInt(durationDays),
-    expires: parseInt(durationDays) === 9999 ? null : Date.now() + (parseInt(durationDays) * 24 * 60 * 60 * 1000)
-  };
-  
-  try {
-    await pool.query(
-      'INSERT INTO api_keys (id, key, plan, email, duration_days, expires) VALUES ($1, $2, $3, $4, $5, $6)',
-      [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires]
-    );
+  let fetchedUsername = null;
+  if (discordId) {
+    try {
+      const dRes = await axios.get(`https://discord.com/api/v10/users/${discordId}`, {
+        headers: { Authorization: `Bot ${process.env.DISCORD_TOKEN}` }
+      });
+      fetchedUsername = dRes.data.username;
+    } catch (e) {
+      console.error('Failed to fetch Discord username:', e.message);
+    }
+  }
+
+    const newKey = {
+      id: Date.now(),
+      key: generateKeyString(email, plan),
+      plan,
+      email: email || fetchedUsername || 'Admin Generated',
+      durationDays: parseInt(durationDays),
+      expires: parseInt(durationDays) === 9999 ? null : Date.now() + (parseInt(durationDays) * 24 * 60 * 60 * 1000)
+    };
+    
+    try {
+      await pool.query(
+        'INSERT INTO api_keys (id, key, plan, email, duration_days, expires, discord_id, username) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+        [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires, discordId || null, fetchedUsername || null]
+      );
 
     if (email && email !== 'Admin Generated' && GMAIL_USER !== 'your_email@gmail.com') {
       try {
@@ -650,16 +662,28 @@ app.post('/api/admin/genkey', async (req, res) => {
       return res.status(403).json({ error: 'Unauthorized. You are not an admin.' });
     }
     
+    let fetchedUsername = null;
+    if (discordId) {
+      try {
+        const dRes = await axios.get(`https://discord.com/api/v10/users/${discordId}`, {
+          headers: { Authorization: `Bot ${process.env.DISCORD_TOKEN}` }
+        });
+        fetchedUsername = dRes.data.username;
+      } catch (e) {
+        console.error('Failed to fetch Discord username:', e.message);
+      }
+    }
+    
     const newKey = `REV-${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + parseInt(durationDays || 30));
     
     await pool.query(
-      'INSERT INTO api_keys (key, plan, expires_at, discord_id) VALUES ($1, $2, $3, $4)',
-      [newKey, (planType || 'plus').toUpperCase(), expiresAt, discordId || null]
+      'INSERT INTO api_keys (key, plan, expires_at, discord_id, username, email) VALUES ($1, $2, $3, $4, $5, $6)',
+      [newKey, (planType || 'plus').toUpperCase(), expiresAt, discordId || null, fetchedUsername || null, fetchedUsername || 'Admin Generated']
     );
     
-    res.json({ key: newKey, expiresAt: expiresAt.toISOString().split('T')[0] });
+    res.json({ key: newKey, expiresAt: expiresAt.toISOString().split('T')[0], username: fetchedUsername });
   } catch (err) {
     console.error('Admin Gen Key Error:', err);
     res.status(500).json({ error: 'Database error while generating key.' });
