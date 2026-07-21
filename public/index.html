@@ -6,7 +6,7 @@
   <meta name="description" content="Reveal — Advanced, low-latency Open Source Intelligence pipelines tailored for the FiveM ecosystem.">
   <title>Reveal INTEL</title>
   <link rel="icon" type="image/png" href="https://r2.fivemanage.com/CTt82m6vQmfGfVrSZjpk0/revealpfp.png">
-  <link rel="stylesheet" href="style.css?v=bw">
+  <link rel="stylesheet" href="style.css?v=bw2">
 </head>
 <body>
   <canvas id="bg-canvas"></canvas>
@@ -686,7 +686,7 @@
             </label>
           </div>
 
-          <button class="access-submit" id="access-signup-submit" style="margin-top:15px; background: #16181f; border-color: rgba(255,255,255,0.05);">GENERATE API KEY</button>
+          <button class="access-submit" id="access-signup-submit" style="margin-top:15px; background: #111111; border-color: rgba(255,255,255,0.05);">GENERATE API KEY</button>
           
           <div class="access-divider"><span>or</span></div>
             
@@ -727,7 +727,7 @@
               <svg class="access-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
               <input class="access-input" type="text" placeholder="The Gold/Diamond Key from Discord" id="claim-new-key" required>
             </div>
-            <button class="access-submit" id="modal-claim-key-btn" style="margin-top:20px; background: #16181f; border-color: rgba(255,255,255,0.05);">CLAIM DISCORD KEY</button>
+            <button class="access-submit" id="modal-claim-key-btn" style="margin-top:20px; background: #111111; border-color: rgba(255,255,255,0.05);">CLAIM DISCORD KEY</button>
             <p id="claim-key-response" style="margin-top:10px; color:#4ade80; display:none;"></p>
           </div>
         </div>
@@ -747,7 +747,7 @@
             
             <p class="access-subhint" style="margin-top: 15px; margin-bottom: 10px; color: rgba(255,255,255,0.5);">After verification you get a <strong>new API key</strong> (shown once). Your old key stops working.</p>
             
-            <button class="access-submit" style="margin-top:0px; background: #16181f; border-color: rgba(255,255,255,0.05);" onclick="alert('Recovery email sent!')">
+            <button class="access-submit" style="margin-top:0px; background: #111111; border-color: rgba(255,255,255,0.05);" onclick="alert('Recovery email sent!')">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px; vertical-align:middle;"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
               SEND CODE
             </button>
@@ -760,7 +760,7 @@
               <input class="access-input" type="text" placeholder="12 CHARACTERS" id="recover-phrase">
             </div>
             
-            <button class="access-submit" style="margin-top:15px; background: #16181f; border-color: rgba(255,255,255,0.05);">RECOVER WITH PHRASE</button>
+            <button class="access-submit" style="margin-top:15px; background: #111111; border-color: rgba(255,255,255,0.05);">RECOVER WITH PHRASE</button>
             
             <button class="access-discord-btn" style="margin-top:10px; background: rgba(255,255,255, 0.05); border-color: rgba(255,255,255,0.1); color: #fff;" onclick="window.location.href='/api/auth/discord'">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: #fff;"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>

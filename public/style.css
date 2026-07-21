@@ -2132,7 +2132,7 @@ body.light-mode, .dashboard-body.light-mode {
   max-width: 95%;
   display: flex;
   flex-direction: row;
-  background: #12141a;
+  background: #0a0a0a;
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.05);
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
@@ -2142,7 +2142,7 @@ body.light-mode, .dashboard-body.light-mode {
 
 .new-ui .access-sidebar {
   width: 260px;
-  background: #16181f;
+  background: #111111;
   padding: 30px 20px;
   border-right: 1px solid rgba(255,255,255,0.05);
   display: flex;
@@ -2197,7 +2197,7 @@ body.light-mode, .dashboard-body.light-mode {
 .new-ui .access-main {
   flex: 1;
   padding: 40px 60px;
-  background: #12141a;
+  background: #0a0a0a;
   position: relative;
 }
 
@@ -2259,7 +2259,7 @@ body.light-mode, .dashboard-body.light-mode {
 
 .new-ui .access-input {
   width: 100%;
-  background: #16181f;
+  background: #111111;
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 8px;
   padding: 14px 15px 14px 45px;
@@ -2325,7 +2325,7 @@ body.light-mode, .dashboard-body.light-mode {
 
 .new-ui .access-discord-btn {
   width: 100%;
-  background: #16181f;
+  background: #111111;
   border: 1px solid rgba(255,255,255,0.1);
   color: #fff;
   padding: 15px;
@@ -2349,7 +2349,7 @@ body.light-mode, .dashboard-body.light-mode {
 
 .new-ui .access-recover-btn {
   width: 100%;
-  background: #16181f;
+  background: #111111;
   border: 1px solid rgba(255,255,255,0.05);
   color: rgba(255,255,255,0.7);
   padding: 15px;
@@ -2379,7 +2379,7 @@ body.light-mode, .dashboard-body.light-mode {
 
 .new-ui .access-cloudflare {
   margin-top: 20px;
-  background: #16181f;
+  background: #111111;
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 8px;
   padding: 15px;
