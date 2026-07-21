@@ -639,6 +639,50 @@ app.get('/api/auth/discord', (req, res) => {
   res.redirect(url);
 });
 
+// Web Admin Key Generation
+app.post('/api/admin/genkey', async (req, res) => {
+  const { adminKey, planType, durationDays, discordId } = req.body;
+  if (!adminKey) return res.status(401).json({ error: 'No admin key provided' });
+  
+  try {
+    const adminRes = await pool.query('SELECT plan FROM api_keys WHERE key = $1', [adminKey]);
+    if (adminRes.rows.length === 0 || !['OWNER', 'ADMIN'].includes(adminRes.rows[0].plan.toUpperCase())) {
+      return res.status(403).json({ error: 'Unauthorized. You are not an admin.' });
+    }
+    
+    const newKey = `REV-${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + parseInt(durationDays || 30));
+    
+    await pool.query(
+      'INSERT INTO api_keys (key, plan, expires_at, discord_id) VALUES ($1, $2, $3, $4)',
+      [newKey, (planType || 'plus').toUpperCase(), expiresAt, discordId || null]
+    );
+    
+    res.json({ key: newKey, expiresAt: expiresAt.toISOString().split('T')[0] });
+  } catch (err) {
+    console.error('Admin Gen Key Error:', err);
+    res.status(500).json({ error: 'Database error while generating key.' });
+  }
+});
+
+// User Discord Linking
+app.post('/api/user/link-discord', async (req, res) => {
+  const { key, discordId } = req.body;
+  if (!key || !discordId) return res.status(400).json({ error: 'Key and Discord ID required' });
+  
+  try {
+    const keyRes = await pool.query('SELECT * FROM api_keys WHERE key = $1', [key]);
+    if (keyRes.rows.length === 0) return res.status(404).json({ error: 'Invalid key.' });
+    
+    await pool.query('UPDATE api_keys SET discord_id = $1 WHERE key = $2', [discordId, key]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Discord Link Error:', err);
+    res.status(500).json({ error: 'Database error while linking.' });
+  }
+});
+
 app.get('/api/auth/discord/callback', async (req, res) => {
   const { code } = req.query;
   if (!code) return res.status(400).send('No code provided');

@@ -133,8 +133,8 @@ async function startBot(pool, generateKeyString, token) {
           };
 
           await pool.query(
-            'INSERT INTO api_keys (id, key, plan, email, duration_days, expires) VALUES ($1, $2, $3, $4, $5, $6)',
-            [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires]
+            'INSERT INTO api_keys (id, key, plan, email, duration_days, expires, discord_id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires, targetUserId]
           );
 
           // DM the user
