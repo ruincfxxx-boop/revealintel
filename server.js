@@ -7,6 +7,7 @@ const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 const Database = require('better-sqlite3');
 const axios = require('axios');
+const crypto = require('crypto');
 
 const app = express();
 app.use(cors());
