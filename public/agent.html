@@ -9,6 +9,13 @@
 </head>
 <body class="agent-body">
   
+  <!-- COMING SOON OVERLAY -->
+  <div class="agent-overlay">
+    <div class="agent-overlay-content">
+      COMING SOON
+    </div>
+  </div>
+
   <div class="agent-layout">
     
     <!-- LEFT SIDEBAR -->
@@ -136,39 +143,5 @@
     </main>
 
   </div>
-
-  <!-- Custom Popup -->
-  <div id="agent-toast" class="agent-toast">
-    <div class="agent-toast-icon">🚀</div>
-    <div class="agent-toast-content">
-      <strong>Coming Soon</strong>
-      <p>Agent capabilities are currently under development.</p>
-    </div>
-  </div>
-
-  <script>
-    function triggerComingSoon() {
-      const input = document.getElementById('agent-input-field');
-      if (input.value.trim() !== '') {
-        const toast = document.getElementById('agent-toast');
-        toast.classList.add('show');
-        
-        // Hide after 3 seconds
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3000);
-        
-        input.value = '';
-      }
-    }
-
-    document.getElementById('agent-submit-btn').addEventListener('click', triggerComingSoon);
-
-    document.getElementById('agent-input-field').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        triggerComingSoon();
-      }
-    });
-  </script>
 </body>
 </html>

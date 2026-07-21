@@ -3582,8 +3582,8 @@ body.light-mode, .dashboard-body.light-mode {
   display: flex;
   flex-direction: column;
   position: relative;
-  /* subtle deep dark red gradient glow from bottom matching screenshot */
-  background: radial-gradient(circle at 50% 120%, rgba(100, 10, 10, 0.15) 0%, #030303 60%);
+  /* subtle white gradient glow from bottom */
+  background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.08) 0%, #030303 60%);
 }
 
 .agent-topnav {
@@ -3887,4 +3887,34 @@ body.light-mode, .dashboard-body.light-mode {
   font-size: 12px;
   color: rgba(255,255,255,0.6);
   font-family: var(--font-sans);
+}
+
+/* OVERLAY */
+.agent-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agent-overlay-content {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #fff;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
 }
