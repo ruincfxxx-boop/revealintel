@@ -685,8 +685,9 @@ app.get('/api/auth/discord/callback', async (req, res) => {
     }
     
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Discord Authentication Failed. Did you set up your Client ID and Secret in .env?');
+    console.error('Discord Auth Error:', err.response?.data || err.message);
+    const errorDetails = err.response?.data ? JSON.stringify(err.response.data) : err.message;
+    res.status(500).send(`Discord Authentication Failed.<br><br><b>Exact Error from Discord:</b> ${errorDetails}<br><br>Check your .env file and ensure DISCORD_REDIRECT_URI exactly matches what is in the Discord Developer Portal.`);
   }
 });
 
