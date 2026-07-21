@@ -137,11 +137,27 @@
 
   </div>
 
+  <!-- Custom Popup -->
+  <div id="agent-toast" class="agent-toast">
+    <div class="agent-toast-icon">🚀</div>
+    <div class="agent-toast-content">
+      <strong>Coming Soon</strong>
+      <p>Agent capabilities are currently under development.</p>
+    </div>
+  </div>
+
   <script>
     function triggerComingSoon() {
       const input = document.getElementById('agent-input-field');
       if (input.value.trim() !== '') {
-        alert("Agent capabilities are coming soon! 🚀");
+        const toast = document.getElementById('agent-toast');
+        toast.classList.add('show');
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+        
         input.value = '';
       }
     }
