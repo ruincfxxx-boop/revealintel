@@ -362,6 +362,33 @@ app.get('/api/captcha', (req, res) => {
   res.json({ id, question: `What is ${num1} + ${num2}?` });
 });
 
+// Claim Key
+app.post('/api/claim', async (req, res) => {
+  const { currentKey, newKey } = req.body;
+  if (!currentKey || !newKey) {
+    return res.status(400).json({ error: 'Missing currentKey or newKey.' });
+  }
+
+  try {
+    // Get the current user's email based on their active key
+    const resCurr = await pool.query('SELECT email FROM api_keys WHERE key = $1', [currentKey]);
+    if (resCurr.rows.length === 0) return res.status(403).json({ error: 'Current API Key is invalid.' });
+    const userEmail = resCurr.rows[0].email;
+
+    // Verify the new key exists
+    const resNew = await pool.query('SELECT * FROM api_keys WHERE key = $1', [newKey]);
+    if (resNew.rows.length === 0) return res.status(404).json({ error: 'The key you entered does not exist.' });
+
+    // Update the new key's email to match the user's account email
+    await pool.query('UPDATE api_keys SET email = $1 WHERE key = $2', [userEmail, newKey]);
+
+    res.json({ success: true, message: 'Key successfully claimed.' });
+  } catch (err) {
+    console.error('Claim Error:', err);
+    res.status(500).json({ error: 'Database error while claiming key.' });
+  }
+});
+
 app.post('/api/register', async (req, res) => {
   const { username, password, email, discordId, invite, captchaId, captchaAnswer } = req.body;
   if (!username || !password || !email || !captchaId || !captchaAnswer) {

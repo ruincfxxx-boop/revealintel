@@ -460,4 +460,37 @@ document.addEventListener('DOMContentLoaded', () => {
       ctxMenu.style.display = 'none';
     };
   }
+
+  // Claim Key Logic
+  const claimKeyBtn = document.getElementById('claim-key-btn');
+  const claimKeyInput = document.getElementById('claim-key-input');
+  if (claimKeyBtn && claimKeyInput) {
+    claimKeyBtn.addEventListener('click', async () => {
+      const newKey = claimKeyInput.value.trim();
+      if (!newKey) return alert('Please enter a key to claim.');
+
+      claimKeyBtn.textContent = 'Claiming...';
+      try {
+        const res = await fetch('/api/claim', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentKey: activeKey, newKey })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          alert('Key successfully claimed! Your account is now upgraded. You will now be logged in with your new key.');
+          localStorage.setItem('reveal_access_key', newKey);
+          window.location.reload();
+        } else {
+          alert(data.error || 'Failed to claim key.');
+        }
+      } catch (err) {
+        alert('Error connecting to server.');
+      } finally {
+        claimKeyBtn.textContent = 'Claim';
+      }
+    });
+  }
+
 });
