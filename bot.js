@@ -8,7 +8,7 @@ async function startBot(pool, generateKeyString, token) {
     return;
   }
 
-  const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
+  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
   const commands = [
     new SlashCommandBuilder()
