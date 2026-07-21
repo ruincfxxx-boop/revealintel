@@ -618,6 +618,67 @@ app.post('/api/claim', async (req, res) => {
   }
 });
 
+// ============================
+// DISCORD OAUTH LOGIN
+// ============================
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
+const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
+const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || 'http://localhost:3000/api/auth/discord/callback';
+
+app.get('/api/auth/discord', (req, res) => {
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify`;
+  res.redirect(url);
+});
+
+app.get('/api/auth/discord/callback', async (req, res) => {
+  const { code } = req.query;
+  if (!code) return res.status(400).send('No code provided');
+  
+  try {
+    const params = new URLSearchParams();
+    params.append('client_id', DISCORD_CLIENT_ID);
+    params.append('client_secret', DISCORD_CLIENT_SECRET);
+    params.append('grant_type', 'authorization_code');
+    params.append('code', code);
+    params.append('redirect_uri', DISCORD_REDIRECT_URI);
+
+    const tokenRes = await axios.post('https://discord.com/api/oauth2/token', params, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    
+    const userRes = await axios.get('https://discord.com/api/users/@me', {
+      headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
+    });
+    
+    const discordUser = userRes.data;
+    
+    // Check if there is an API key associated with this Discord ID
+    const keyRes = await pool.query('SELECT * FROM api_keys WHERE discord_id = $1 OR email = $1', [discordUser.id]);
+    
+    if (keyRes.rows.length > 0) {
+      // Log them in using this key!
+      const userKey = keyRes.rows[0].key;
+      res.send(`
+        <script>
+          localStorage.setItem('reveal_access_key', '${userKey}');
+          window.location.href = '/dashboard';
+        </script>
+      `);
+    } else {
+      res.send(`
+        <script>
+          alert('No API key found linked to this Discord account. If the bot generated one for you, use the Claim Key tab first!');
+          window.location.href = '/';
+        </script>
+      `);
+    }
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Discord Authentication Failed. Did you set up your Client ID and Secret in .env?');
+  }
+});
+
 // 5. Clean Expired Keys Periodically
 setInterval(async () => {
   const now = Date.now();
