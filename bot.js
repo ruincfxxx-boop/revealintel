@@ -77,7 +77,7 @@ async function startBot(pool, generateKeyString, token) {
           .setCustomId('planType')
           .setLabel("Plan Type")
           .setStyle(TextInputStyle.Short)
-          .setPlaceholder('e.g., Bronze, Silver, Gold, Diamond, Lifetime')
+          .setPlaceholder('e.g., owner, plus, pro, enterprise')
           .setRequired(true);
 
         const durationInput = new TextInputBuilder()
