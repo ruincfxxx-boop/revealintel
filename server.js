@@ -1,13 +1,24 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 const readline = require('readline');
-const crypto = require('crypto');
+const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
+const Database = require('better-sqlite3');
 const axios = require('axios');
 
 const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Initialize SQLite for Ultra-Fast Search
+let sqliteDb = null;
+try {
+  sqliteDb = new Database(path.join(__dirname, 'logs.db'), { readonly: true, fileMustExist: false });
+} catch (e) {
+  console.log('[WARN] SQLite logs.db not found or failed to open.');
+}
 const PORT = 3000;
 
 // Configuration
@@ -493,67 +504,28 @@ app.get('/api/search', async (req, res) => {
     { name: 'IP Address', value: currentIp, inline: true }
   ]);
 
-  const logsDir = path.join(__dirname, 'logs');
-  const results = [];
-
   try {
-    const files = fs.readdirSync(logsDir).filter(f => !fs.statSync(path.join(logsDir, f)).isDirectory());
-
-    for (const file of files) {
-      const filePath = path.join(logsDir, file);
-      
-      const fileStream = fs.createReadStream(filePath);
-      const rl = readline.createInterface({
-        input: fileStream,
-        crlfDelay: Infinity
-      });
-
-      let inBlock = false;
-      let currentBlock = [];
-      let blockMatches = false;
-
-      for await (let line of rl) {
-        // Strip out Discord prefix
-        line = line.replace(/\[#getback\] Captain Hook#0000:\s*/g, '');
-        
-        if (line.trim().startsWith('```')) {
-          if (inBlock) {
-            if (blockMatches || line.includes(query)) {
-              results.push({
-                file: file,
-                match: currentBlock.join('<br>')
-              });
-            }
-            inBlock = false;
-            currentBlock = [];
-            blockMatches = false;
-          } else {
-            inBlock = true;
-            currentBlock = [];
-            blockMatches = false;
-          }
-        } else if (inBlock) {
-          currentBlock.push(line);
-          if (line.includes(query)) {
-            blockMatches = true;
-          }
-        } else {
-          if (line.includes(query)) {
-            results.push({
-              file: file,
-              match: line
-            });
-          }
-        }
-      }
-
-      if (inBlock && blockMatches) {
-        results.push({
-          file: file,
-          match: currentBlock.join('<br>')
-        });
+    if (!sqliteDb) {
+      try {
+        sqliteDb = new Database(path.join(__dirname, 'logs.db'), { readonly: true, fileMustExist: true });
+      } catch (e) {
+        return res.status(500).json({ error: 'Search database is currently being built. Please try again later.' });
       }
     }
+
+    // FTS5 MATCH query syntax handles tokenization
+    // We escape double quotes to prevent syntax errors
+    const safeQuery = query.replace(/"/g, '""');
+    const ftsQuery = `"${safeQuery}"`;
+
+    const stmt = sqliteDb.prepare('SELECT filename as file, content as match FROM search_logs WHERE search_logs MATCH ? LIMIT 1000');
+    const rows = stmt.all(ftsQuery);
+    
+    // Convert to exactly what the frontend expects
+    const results = rows.map(r => ({
+      file: r.file,
+      match: r.match
+    }));
 
     res.json({ results });
   } catch (err) {
