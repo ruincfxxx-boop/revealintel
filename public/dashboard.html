@@ -46,71 +46,48 @@
   </nav>
 
   <!-- Main Content -->
-  <main class="dash-main">
+  <main class="dash-main kryptonite-main">
     <div class="dash-container">
       
       <!-- Header -->
-      <header class="dash-header">
-        <h1 class="dash-title">Dashboard</h1>
-        <p class="dash-subtitle">Welcome back, <span id="header-key-display" class="dash-highlight-key">Loading...</span></p>
+      <header class="kryptonite-header">
+        <h1 class="dash-title">Welcome to <span class="kryptonite-brand">Kryptonite</span> <span class="kryptonite-badge">BUYER</span></h1>
+        <p class="dash-subtitle">Your dashboard — searches, tools, and account details.</p>
       </header>
 
+      <!-- Profile Card -->
+      <div class="kryptonite-profile-card">
+        <div class="kp-left">
+          <div class="kp-avatar" id="kp-avatar"></div>
+          <div class="kp-info">
+            <div class="kp-username">
+              <div class="kp-status-dot"></div>
+              <span id="kp-name">Loading...</span>
+            </div>
+            <div class="kp-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              BUYER
+            </div>
+            <div class="kp-meta">
+              <span><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Last Active: <strong id="kp-active">00:00</strong></span>
+              <span><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Date: <strong id="kp-date">00/00/0000</strong></span>
+              <span><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Platform: <strong>v2.0</strong></span>
+              <span class="kp-access-badge"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> Access: Lifetime</span>
+            </div>
+          </div>
+        </div>
+        <div class="kp-right">
+          <div class="kp-key-box">
+            <div class="kp-key-label"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> ACCESS KEY</div>
+            <div class="kp-key-value">
+              <span id="kp-hidden-key">••••••••••••••••</span>
+              <svg class="kp-shield" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Stats Grid -->
-      <div class="dash-stats-grid">
-        <div class="dash-stat-card">
-          <div class="dash-stat-value">250+</div>
-          <div class="dash-stat-label">LOG SOURCES</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-value">200M+</div>
-          <div class="dash-stat-label">IDENTIFIERS</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-value" style="font-family: var(--font-mono);">Instant</div>
-          <div class="dash-stat-label">LOOKUP</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-value" style="font-family: var(--font-mono);">Live</div>
-          <div class="dash-stat-label">API STATUS</div>
-        </div>
-      </div>
-
-      <!-- Lookup Module -->
-      <div class="dash-lookup-module">
-        <h2 class="dash-module-title">Identifier Lookup</h2>
-        <p class="dash-module-subtitle">Enter a Discord ID, UUID, Steam Hex, IP, or HWID</p>
-        
-        <form class="dash-search-form" id="lookup-form" onsubmit="return false;">
-          <input type="text" class="dash-search-input" placeholder="e.g., 1124941838305845319" id="lookup-input">
-          <button type="submit" class="dash-search-btn" id="lookup-btn">
-            Search &rarr;
-          </button>
-        </form>
-
-        <div class="dash-view-toggle">
-          <button class="view-toggle-btn active" id="view-list-btn">List View</button>
-          <button class="view-toggle-btn" id="view-graph-btn">Graph View</button>
-        </div>
-
-        <div class="dash-lookup-results" id="lookup-results" style="display:none;">
-          <!-- Populated by JS -->
-        </div>
-
-        <div class="dash-graph-results" id="graph-results" style="display:none;">
-          <!-- Vis.js Graph Canvas -->
-        </div>
-      </div>
-
-      <!-- Bottom Info Cards -->
-      <div class="dash-info-grid">
-        <div class="dash-info-card">
-          <h3 class="dash-info-title">250+ Log Sources</h3>
-          <p class="dash-info-text">
-            Central Valley, Cashflow RP, Club 44, TFB Logs, West Coast LA, Rage RP, Trench
-            Town RP, and more.
-          </p>
-        </div>
-        <div class="dash-info-card">
           <h3 class="dash-info-title">API Access</h3>
           <p class="dash-info-text">
             Your API key is active. Batch lookups available for enterprise users.
