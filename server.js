@@ -578,13 +578,23 @@ app.get('/api/search', async (req, res) => {
     const stmt = sqliteDb.prepare('SELECT filename as file, content as match FROM search_logs WHERE search_logs MATCH ? LIMIT 1000');
     const rows = stmt.all(ftsQuery);
     
-    // Convert to exactly what the frontend expects
     const results = rows.map(r => ({
       file: r.file,
       match: r.match
     }));
 
-    res.json({ results });
+    // Live Discord ID Resolver (OSINT Feature)
+    let resolvedUsername = null;
+    if (/^\d{17,20}$/.test(query.trim())) {
+      try {
+        const dRes = await axios.get(`https://discord.com/api/v10/users/${query.trim()}`, {
+          headers: { Authorization: `Bot ${process.env.DISCORD_TOKEN}` }
+        });
+        resolvedUsername = dRes.data.username;
+      } catch (e) {}
+    }
+
+    res.json({ results, resolvedDiscordUsername: resolvedUsername });
   } catch (err) {
     console.error('Search error:', err);
     res.status(500).json({ error: 'Internal server error while reading logs.' });

@@ -60,6 +60,67 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     
+    // Show Admin Panel if Owner
+    if (plan.toUpperCase() === 'OWNER' || plan.toUpperCase() === 'ADMIN') {
+      const adminModule = document.getElementById('dash-admin-module');
+      if (adminModule) adminModule.style.display = 'block';
+      
+      const adminGenBtn = document.getElementById('admin-gen-btn');
+      if (adminGenBtn) {
+        adminGenBtn.addEventListener('click', async () => {
+          const p = document.getElementById('admin-plan-select').value;
+          const dId = document.getElementById('admin-discord-id').value;
+          const days = document.getElementById('admin-days').value || 30;
+          
+          const res = await fetch('/api/admin/genkey', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ adminKey: activeKey, planType: p, durationDays: days, discordId: dId })
+          });
+          const data = await res.json();
+          const resultDiv = document.getElementById('admin-gen-result');
+          if (data.key) {
+            resultDiv.style.color = '#4ade80';
+            resultDiv.innerHTML = `Generated Key: <strong>${data.key}</strong> <br>Expires: ${data.expiresAt} <br>Discord Linked: ${dId ? 'Yes' : 'No'}`;
+          } else {
+            resultDiv.style.color = '#fca5a5';
+            resultDiv.textContent = data.error || 'Failed to generate key.';
+          }
+        });
+      }
+    }
+    
+    // Show Discord Link Module (just always show it for now unless we know they have it linked)
+    // For simplicity, let's just show it.
+    const discordLinkModule = document.getElementById('dash-discord-link-module');
+    if (discordLinkModule) {
+      // In a real app we'd hide it if already linked, but let's allow them to update it.
+      discordLinkModule.style.display = 'block';
+      
+      const linkBtn = document.getElementById('discord-link-btn');
+      if (linkBtn) {
+        linkBtn.addEventListener('click', async () => {
+          const dId = document.getElementById('discord-link-input').value;
+          if (!dId) return alert('Enter a Discord ID first');
+          
+          const res = await fetch('/api/user/link-discord', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: activeKey, discordId: dId })
+          });
+          const resultDiv = document.getElementById('discord-link-result');
+          if (res.ok) {
+            resultDiv.style.color = '#4ade80';
+            resultDiv.textContent = 'Successfully linked Discord ID: ' + dId;
+          } else {
+            const data = await res.json();
+            resultDiv.style.color = '#fca5a5';
+            resultDiv.textContent = data.error || 'Failed to link Discord ID.';
+          }
+        });
+      }
+    }
+    
   } else {
     if (navKeyDisplay) navKeyDisplay.textContent = "Guest";
   }
@@ -166,7 +227,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
           }
 
-          let html = `<div style="margin-bottom:12px; color: #4ade80;">✓ ${data.results.length} Match(es) Found</div>`;
+          let html = '';
+          if (data.resolvedDiscordUsername) {
+            html += `<div style="margin-bottom:12px; padding:10px; background:rgba(88, 101, 242, 0.1); border:1px solid rgba(88, 101, 242, 0.3); border-radius:4px; display:flex; align-items:center; gap:10px;">
+              <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" style="width:20px; height:20px;">
+              <div>
+                <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px;">Resolved Discord User</div>
+                <div style="color:#fff; font-weight:bold; font-size:16px;">@${data.resolvedDiscordUsername}</div>
+              </div>
+            </div>`;
+          }
+          html += `<div style="margin-bottom:12px; color: #4ade80;">✓ ${data.results.length} Match(es) Found</div>`;
           
           data.results.forEach((r, idx) => {
             html += `

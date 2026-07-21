@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Reveal INTEL</title>
   <link rel="icon" type="image/png" href="https://r2.fivemanage.com/CTt82m6vQmfGfVrSZjpk0/revealpfp.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css?v=2">
   <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 </head>
 <body class="dashboard-body">
@@ -118,6 +118,35 @@
           <div class="rev-stat-val" id="rev-total-searches">50</div>
           <div class="rev-stat-lbl">TOTAL SEARCHES</div>
         </div>
+      </div>
+
+      <!-- Admin Key Generation Module (Hidden by Default) -->
+      <div class="dash-lookup-module" id="dash-admin-module" style="display:none; margin-bottom: 20px; background: rgba(30, 20, 20, 0.4); border: 1px solid rgba(255, 100, 100, 0.2);">
+        <h2 class="dash-module-title" style="color: #fca5a5;">Admin: Generate Key</h2>
+        <p class="dash-module-subtitle">Create a new key and optionally link it directly to a Discord ID.</p>
+        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+           <select id="admin-plan-select" class="dash-search-input" style="width: auto; flex: 1;">
+             <option value="owner">Owner (Lifetime)</option>
+             <option value="plus">Plus</option>
+             <option value="pro">Pro</option>
+             <option value="enterprise">Enterprise</option>
+           </select>
+           <input type="text" id="admin-discord-id" class="dash-search-input" style="flex: 2;" placeholder="User's Discord ID (Optional)">
+           <input type="number" id="admin-days" class="dash-search-input" style="width: 100px;" placeholder="Days">
+           <button class="dash-search-btn" id="admin-gen-btn" style="width: auto; padding: 0 20px;">Generate Key</button>
+        </div>
+        <div id="admin-gen-result" style="margin-top: 10px; font-family: var(--font-mono); color: #4ade80; font-size: 14px;"></div>
+      </div>
+
+      <!-- User Discord Link Module (Hidden if already linked) -->
+      <div class="dash-lookup-module" id="dash-discord-link-module" style="display:none; margin-bottom: 20px;">
+        <h2 class="dash-module-title">Link Your Discord</h2>
+        <p class="dash-module-subtitle">Link your Discord ID to your key to enable Discord bot access.</p>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+           <input type="text" id="discord-link-input" class="dash-search-input" placeholder="Your Discord ID...">
+           <button class="dash-search-btn" id="discord-link-btn" style="width: auto; padding: 0 20px;">Link Account</button>
+        </div>
+        <div id="discord-link-result" style="margin-top: 10px; font-size: 14px;"></div>
       </div>
 
       <!-- Lookup Module -->

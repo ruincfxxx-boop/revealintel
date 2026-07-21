@@ -4074,11 +4074,12 @@ body.light-mode, .dashboard-body.light-mode {
 
 .rev-key-hidden {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255,255,255,0.8);
-  letter-spacing: 1px;
+  letter-spacing: 0px;
   word-break: break-all;
-  max-width: 250px;
+  max-width: 160px;
+  line-height: 1.4;
 }
 
 /* STATS GRID */
