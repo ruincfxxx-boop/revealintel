@@ -53,13 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ adminToken: passInput.value, plan, durationDays, email })
       });
       const data = await res.json();
-      
       if (data.success) {
         emailInput.value = '';
         renderKeys();
+      } else {
+        alert(data.error || 'Failed to generate key');
       }
     } catch (err) {
       console.error('Failed to generate key', err);
+      alert('Error connecting to server');
     }
   });
 

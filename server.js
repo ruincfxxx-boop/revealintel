@@ -170,26 +170,31 @@ app.post('/api/generate', async (req, res) => {
     expires: parseInt(durationDays) === 9999 ? null : Date.now() + (parseInt(durationDays) * 24 * 60 * 60 * 1000)
   };
   
-  await pool.query(
-    'INSERT INTO api_keys (id, key, plan, email, duration_days, expires) VALUES ($1, $2, $3, $4, $5, $6)',
-    [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires]
-  );
+  try {
+    await pool.query(
+      'INSERT INTO api_keys (id, key, plan, email, duration_days, expires) VALUES ($1, $2, $3, $4, $5, $6)',
+      [newKey.id, newKey.key, newKey.plan, newKey.email, newKey.durationDays, newKey.expires]
+    );
 
-  if (email && email !== 'Admin Generated' && GMAIL_USER !== 'your_email@gmail.com') {
-    try {
-      await transporter.sendMail({
-        from: `"Reveal Intelligence" <${GMAIL_USER}>`,
-        to: email,
-        subject: `Your Reveal ${plan} API Key`,
-        html: `<h2>Welcome to Reveal Intelligence!</h2><p>Your API Key has been generated for your recent purchase.</p><p>Your API Key is: <strong style="color:#4ade80;">${newKey.key}</strong></p><p>Keep this safe!</p>`
-      });
-      console.log(`[REAL EMAIL] Sent admin-generated key to ${email}`);
-    } catch (e) {
-      console.error('Admin Email failed to send:', e);
+    if (email && email !== 'Admin Generated' && GMAIL_USER !== 'your_email@gmail.com') {
+      try {
+        await transporter.sendMail({
+          from: `"Reveal Intelligence" <${GMAIL_USER}>`,
+          to: email,
+          subject: `Your Reveal ${plan} API Key`,
+          html: `<h2>Welcome to Reveal Intelligence!</h2><p>Your API Key has been generated.</p><p>Your API Key is: <strong style="color:#4ade80;">${newKey.key}</strong></p><p>Keep this safe!</p>`
+        });
+        console.log(`[REAL EMAIL] Sent admin-generated key to ${email}`);
+      } catch (e) {
+        console.error('Admin Email failed to send:', e);
+      }
     }
-  }
 
-  res.json({ success: true, key: newKey });
+    res.json({ success: true, key: newKey });
+  } catch (err) {
+    console.error('Generate Error:', err);
+    res.status(500).json({ error: 'Database error: ' + err.message });
+  }
 });
 
 // Revoke Key
