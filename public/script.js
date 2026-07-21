@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // Auto-Login Status
-  const isIndex = !window.location.pathname.includes('dashboard.html');
+  const isIndex = !window.location.pathname.includes('/dashboard');
   const hasSavedKey = !!localStorage.getItem('reveal_active_key');
 
   const navLinks = document.querySelectorAll('.nav-link');
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       accessBtn.textContent = 'Open Dashboard';
       accessBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        window.location.href = 'dashboard.html';
+        window.location.href = '/dashboard';
       });
     } else {
       accessBtn.addEventListener('click', (e) => {
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
               sessionStorage.setItem('reveal_username', data.user);
               alert("New location detected. Your session will not be saved permanently.");
             }
-            window.location.href = 'dashboard.html';
+            window.location.href = '/dashboard';
           }
         })
         .catch(err => {
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             localStorage.setItem('reveal_active_key', data.key);
             localStorage.setItem('reveal_username', data.user);
-            window.location.href = 'dashboard.html';
+            window.location.href = '/dashboard';
           }
         })
         .catch(err => {
@@ -833,6 +833,48 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animateBg);
     }
     animateBg();
+  }
+
+  const contactForm = document.getElementById('contact-form');
+  const contactSubmitBtn = document.querySelector('.contact-submit');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      const email = document.getElementById('contact-email').value;
+      const subject = document.getElementById('contact-subject').value;
+      const message = document.getElementById('contact-message').value;
+
+      if (!name || !email || !subject || !message) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      contactSubmitBtn.textContent = 'Sending...';
+      contactSubmitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          alert('Message sent successfully!');
+          contactForm.reset();
+        } else {
+          alert(data.error || 'Failed to send message.');
+        }
+      } catch (err) {
+        alert('An error occurred. Please try again.');
+      } finally {
+        contactSubmitBtn.textContent = 'Send Message';
+        contactSubmitBtn.disabled = false;
+      }
+    });
   }
 
 });

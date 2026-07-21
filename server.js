@@ -167,6 +167,22 @@ app.get('/api/admin/keys', async (req, res) => {
   }
 });
 
+// Contact Form Endpoint
+app.post('/api/contact', async (req, res) => {
+  const { name, email, subject, message } = req.body;
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
+
+  logToDiscord(`New Contact Message ✉️`, `**Subject:** ${subject}`, 0x3b82f6, [
+    { name: 'Name', value: name, inline: true },
+    { name: 'Email', value: email, inline: true },
+    { name: 'Message', value: message, inline: false }
+  ], true);
+
+  res.json({ success: true, message: 'Message sent successfully!' });
+});
+
 // 2. GENERATE - Admin Key Generator (No payment needed)
 app.post('/api/generate', async (req, res) => {
   const { adminToken, plan, email, durationDays } = req.body;
