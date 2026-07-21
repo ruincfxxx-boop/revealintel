@@ -92,13 +92,13 @@
         </div>
 
         <div class="agent-hero-center">
-          <div class="agent-icon-large">P</div>
-          <h1 class="agent-hero-title">Proximity Agent</h1>
+          <div class="agent-icon-large">R</div>
+          <h1 class="agent-hero-title">Reveal Agent</h1>
           <p class="agent-hero-desc">An autonomous investigator. Cross-references breaches, stealer logs, and platforms to build comprehensive intelligence reports.</p>
           
           <div class="agent-search-bar">
             <svg class="agent-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            <input type="text" class="agent-input" placeholder="Unmask an alias across the web...">
+            <input type="text" class="agent-input" id="agent-input-field" placeholder="Unmask an alias across the web...">
             
             <div class="agent-search-controls">
               <div class="agent-dropdown">
@@ -110,7 +110,7 @@
                 High
                 <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </div>
-              <button class="agent-submit-btn">
+              <button class="agent-submit-btn" id="agent-submit-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
               </button>
             </div>
@@ -137,5 +137,22 @@
 
   </div>
 
+  <script>
+    function triggerComingSoon() {
+      const input = document.getElementById('agent-input-field');
+      if (input.value.trim() !== '') {
+        alert("Agent capabilities are coming soon! 🚀");
+        input.value = '';
+      }
+    }
+
+    document.getElementById('agent-submit-btn').addEventListener('click', triggerComingSoon);
+
+    document.getElementById('agent-input-field').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        triggerComingSoon();
+      }
+    });
+  </script>
 </body>
 </html>
