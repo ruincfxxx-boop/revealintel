@@ -24,7 +24,7 @@ async function startBot(pool, generateKeyString, token) {
       console.log('[BOT] Refreshing application (/) commands.');
       await rest.put(
         Routes.applicationCommands(client.user.id),
-        { body: commands },
+        { body: commands.map(c => c.toJSON()) },
       );
       console.log('[BOT] Successfully reloaded application (/) commands.');
     } catch (error) {
