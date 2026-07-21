@@ -686,7 +686,7 @@ app.post('/api/admin/genkey', async (req, res) => {
     res.json({ key: newKey, expiresAt: expiresAt.toISOString().split('T')[0], username: fetchedUsername });
   } catch (err) {
     console.error('Admin Gen Key Error:', err);
-    res.status(500).json({ error: 'Database error while generating key.' });
+    res.status(500).json({ error: `Database error: ${err.message}` });
   }
 });
 
