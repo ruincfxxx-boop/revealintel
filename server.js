@@ -561,6 +561,11 @@ setInterval(async () => {
 }, 60 * 60 * 1000);
 
 if (require.main === module) {
+  // Start Discord Bot if token exists
+  require('dotenv').config(); // Ensure dotenv is loaded if they use .env
+  const { startBot } = require('./bot');
+  startBot(pool, generateKeyString, process.env.DISCORD_BOT_TOKEN);
+
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
